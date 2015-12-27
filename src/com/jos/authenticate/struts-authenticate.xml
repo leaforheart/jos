@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+	"http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+
+	<package name="jos-authenticate" extends="jos-default" namespace="/authenticate">
+	
+		<action name="login" class="com.jos.authenticate.action.AuthenticateAction" method="login">
+		</action>
+		
+		<action name="enroll" class="com.jos.authenticate.action.AuthenticateAction" method="enroll">
+		</action>
+		
+		<action name="resetPassword" class="com.jos.authenticate.action.AuthenticateAction" method="resetPassword">
+		</action>
+		
+		<action name="phoneCode" class="com.jos.authenticate.action.AuthenticateAction" method="phoneCode">
+		</action>
+		
+		<action name="loginOut" class="com.jos.authenticate.action.AuthenticateAction" method="loginOut">
+		</action>
+		
+		<action name="setPassword" class="com.jos.authenticate.action.AuthenticateAction" method="setPassword">
+		</action>
+		
+		<action name="getUserInfo" class="com.jos.authenticate.action.AuthenticateAction" method="getUserInfo">
+		</action>
+		
+	</package>
+	
+</struts>

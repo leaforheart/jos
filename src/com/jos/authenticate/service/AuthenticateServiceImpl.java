@@ -1,0 +1,280 @@
+package com.jos.authenticate.service;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
+
+import javax.servlet.http.Cookie;
+
+import redis.clients.jedis.Jedis;
+
+import com.inveno.util.CollectionUtils;
+import com.inveno.util.MD5Utils;
+import com.inveno.util.StringUtil;
+import com.jos.authenticate.dao.AuthenticateDao;
+import com.jos.authenticate.model.User;
+import com.jos.authenticate.vo.AuthenticateBean;
+import com.jos.common.baseclass.AbstractBaseService;
+import com.jos.common.util.Constants;
+import com.jos.common.util.SysContext;
+import com.jos.redis.RedisClient;
+
+public class AuthenticateServiceImpl extends AbstractBaseService implements AuthenticateService {
+	
+	private AuthenticateDao authenticateDao;
+
+	public AuthenticateDao getAuthenticateDao() {
+		return authenticateDao;
+	}
+
+	public void setAuthenticateDao(AuthenticateDao authenticateDao) {
+		this.authenticateDao = authenticateDao;
+	}
+
+	@Override
+	public HashMap<String, Object> login(AuthenticateBean authenticateBean) {
+		Jedis jedis = RedisClient.getJedis();
+		HashMap<String, Object>  map = new HashMap<String, Object>();
+		try {
+			User user = authenticateBean.getUser();
+			String principal = user.getPrimPrin();
+			String credential = user.getCredential();
+			
+			List<String> para = new ArrayList<String>();
+			para.add(principal);
+			para.add(principal);
+			para.add(principal);
+			para.add(principal);
+			List<User> userList = authenticateDao.findByHql("from User as user where user.primPrin=? or user.principal1=? or user.principal2=? or user.principal3=?", para);
+			if(CollectionUtils.isEmpty(userList)){
+				map.put(Constants.RETURN_CODE, "-1");//用户不存在
+				return map;
+			}
+			if(userList.size()>1) {
+				map.put(Constants.RETURN_CODE, "-2");//用户在系统中存在多个
+				return map;
+			}
+			User dbUser = userList.get(0);
+			String encodeCredential = dbUser.getCredential();
+			if(!encodeCredential.equals(MD5Utils.getResult(credential))) {
+				map.put(Constants.RETURN_CODE, "-3");//密码错误
+				return map;
+			}
+			dbUser.setStatus("1");
+			
+			map.put(Constants.RETURN_CODE, Constants.SUCCESS_CODE);
+			map.put("primPrin", dbUser.getPrimPrin());
+			map.put("principal1", dbUser.getPrincipal1());
+			map.put("principal2", dbUser.getPrincipal2());
+			map.put("principal3", dbUser.getPrincipal3());
+			
+			String uuid = UUID.randomUUID().toString();
+			jedis.hset(uuid, "userId", dbUser.getId());
+			jedis.hset(uuid, "primPrin", dbUser.getPrimPrin());
+			jedis.hset(uuid, "principal1", dbUser.getPrincipal1());
+			jedis.hset(uuid, "principal2", dbUser.getPrincipal2());
+			jedis.hset(uuid, "principal3", dbUser.getPrincipal3());
+			jedis.hset(uuid, "credential", encodeCredential);
+			jedis.expire(uuid, 60*60*2);
+			
+			Cookie cookie = new Cookie(Constants.SESSIONID,uuid);
+			cookie.setMaxAge(30*60);
+			cookie.setPath("/");
+			
+			map.put("cookie",cookie);
+		} catch (Exception e) {
+			map.clear();
+			map.put(Constants.RETURN_CODE,Constants.SEVER_ERROR);
+		} finally {
+			RedisClient.returnResource(jedis);
+		}
+		
+		return map;
+	}
+
+	@Override
+	public HashMap<String, Object> enroll(AuthenticateBean authenticateBean) {	
+		Jedis jedis = RedisClient.getJedis();
+		HashMap<String, Object>  map = new HashMap<String, Object>();
+		try {
+			String code = authenticateBean.getPhoneCode();
+			String primPrin = authenticateBean.getUser().getPrimPrin();
+			String codeInRedis = jedis.get(primPrin+Constants.PHONECODE+"1");
+			String credential = authenticateBean.getUser().getCredential();
+			
+			if(codeInRedis==null||!codeInRedis.equals(code)) {
+				map.put(Constants.RETURN_CODE,"-1");//验证码错误
+				return map;
+			}
+			
+			User user = new User();
+			user.setPrimPrin(primPrin);
+			user.setCredential(MD5Utils.getResult(credential));
+			user.setCreateTime(new Date());
+			user.setLastUpdateTime(new Date());
+			user.setStatus("0");
+			authenticateDao.save(user);
+			
+			map.put(Constants.RETURN_CODE, Constants.SUCCESS_CODE);
+		} catch (Exception e) {
+			map.clear();
+			map.put(Constants.RETURN_CODE,Constants.SEVER_ERROR);
+		} finally {
+			RedisClient.returnResource(jedis);
+		}
+		
+		return map;
+	}
+
+	@Override
+	public HashMap<String, Object> resetPassword(AuthenticateBean authenticateBean) {
+		Jedis jedis = RedisClient.getJedis();
+		HashMap<String, Object>  map = new HashMap<String, Object>();
+		try {
+			String encodeCredential = jedis.hget(SysContext.getUuid(), "credential");
+			String credential = authenticateBean.getUser().getCredential();
+			if(encodeCredential==null||!encodeCredential.equals(MD5Utils.getResult(credential))) {
+				map.put(Constants.RETURN_CODE, "-1");
+				return map;
+			}
+			String userId = jedis.hget(SysContext.getUuid(), "userId");
+			if(StringUtil.isEmpty(userId)) {
+				map.put(Constants.RETURN_CODE, "-2");
+				return map;
+			}
+			User user = authenticateDao.findById(userId, User.class);
+			String newCredential = authenticateBean.getNewCredential();
+			user.setCredential(newCredential);
+			user.setLastUpdateTime(new Date());
+		} catch (Exception e) {
+			map.clear();
+			map.put(Constants.RETURN_CODE,Constants.SEVER_ERROR);
+		} finally {
+			RedisClient.returnResource(jedis);
+		}
+		
+		return map;
+	}
+
+	@Override
+	public HashMap<String, Object> phoneCode(AuthenticateBean authenticateBean) {
+		Jedis jedis = RedisClient.getJedis();
+		HashMap<String, Object>  map = new HashMap<String, Object>();
+		
+		try {
+			String primPrin = authenticateBean.getUser().getPrimPrin();
+			List<String> parameters = new ArrayList<String>();
+			parameters.add(primPrin);
+			List<User> list = authenticateDao.findByHql("from User where primPrin=?", parameters);
+			String phoneCodeUse = authenticateBean.getPhoneCodeUse();
+			if("1".equals(phoneCodeUse)) {
+				if(list.size()>0) {
+					map.put(Constants.RETURN_CODE, "-1");
+					return map;
+				}
+			}else if("2".equals(phoneCodeUse)) {
+				if(list==null||list.size()!=1) {
+					map.put(Constants.RETURN_CODE, "-2");
+					return map;
+				}
+			}
+			String code = getCode(primPrin);
+			if(StringUtil.isEmpty(code)) {
+				map.put(Constants.RETURN_CODE, "-3");
+				return map;
+			}
+			jedis.set(primPrin+Constants.PHONECODE+phoneCodeUse, code);
+		} catch (Exception e) {
+			map.clear();
+			map.put(Constants.RETURN_CODE,Constants.SEVER_ERROR);
+		} finally {
+			RedisClient.returnResource(jedis);
+		} 
+		
+		return map;
+	}
+	
+	private String getCode(String phone) {
+		return null;
+	}
+
+	@Override
+	public HashMap<String, Object> loginOut(AuthenticateBean authenticateBean) {
+		Jedis jedis = RedisClient.getJedis();
+		HashMap<String, Object>  map = new HashMap<String, Object>();
+		
+		try {
+			String uuid = SysContext.getUuid();
+			jedis.hdel(uuid);
+			Cookie cookie = new Cookie(Constants.SESSIONID,uuid);
+			cookie.setMaxAge(0);
+			map.put(Constants.RETURN_CODE, Constants.SUCCESS_CODE);
+			map.put("cookie", cookie);
+		} catch (Exception e) {
+			map.clear();
+			map.put(Constants.RETURN_CODE,Constants.SEVER_ERROR);
+		} finally {
+			RedisClient.returnResource(jedis);
+		}
+		
+		return map;
+	}
+
+	@Override
+	public HashMap<String, Object> setPassword(AuthenticateBean authenticateBean) {
+		Jedis jedis = RedisClient.getJedis();
+		HashMap<String, Object>  map = new HashMap<String, Object>();
+		
+		try {
+			String code = authenticateBean.getPhoneCode();
+			String primPrin = authenticateBean.getUser().getPrimPrin();
+			String codeInRedis = jedis.get(primPrin+Constants.PHONECODE+"2");
+			if(codeInRedis==null||!codeInRedis.equals(code)) {
+				map.put(Constants.RETURN_CODE,"-1");//验证码错误
+				return map;
+			}
+			String newCredential = authenticateBean.getNewCredential();
+			List<String> parameters = new ArrayList<String>();
+			parameters.add(primPrin);
+			List<User> list = authenticateDao.findByHql("from User where primPrin=?", parameters);
+			if(list==null||list.size()!=1) {
+				map.put(Constants.RETURN_CODE, "-2");
+				return map;
+			}
+			User user = list.get(0);
+			user.setCredential(newCredential);
+			user.setLastUpdateTime(new Date());
+			map.put(Constants.RETURN_CODE, Constants.SUCCESS_CODE);
+		} catch (Exception e) {
+			map.clear();
+			map.put(Constants.RETURN_CODE,Constants.SEVER_ERROR);
+		} finally {
+			RedisClient.returnResource(jedis);
+		}
+		
+		return map;
+	}
+	
+	@Override
+	public HashMap<String,String> getUserInfo(String uuid) {
+		HashMap<String,String> map = (HashMap<String, String>) SysContext.getUserMap();
+		String userId = map.get("userId");
+		if(StringUtil.isEmpty(userId)) {
+			map.clear();
+			map.put(Constants.RETURN_CODE, "-1");
+			return map;
+		}
+		User user = authenticateDao.findById(userId, User.class);
+		if(user==null||StringUtil.isEmpty(user.getId())) {
+			map.clear();
+			map.put(Constants.RETURN_CODE, "-1");
+			return map;
+		}
+		map.put(Constants.RETURN_CODE, Constants.SUCCESS_CODE);
+		return map;
+	}
+
+
+}

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+	"http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+
+	<package name="jos-item" extends="jos-default" namespace="/item">
+	
+		<action name="addItem" class="com.jos.item.action.ItemAction" method="addItem">
+		</action>
+		<action name="updItem" class="com.jos.item.action.ItemAction" method="updItem">
+		</action>
+		<action name="itemOnline" class="com.jos.item.action.ItemAction" method="itemOnline">
+		</action>
+		<action name="itemOffline" class="com.jos.item.action.ItemAction" method="itemOffline">
+		</action>
+		<action name="addItemProperties" class="com.jos.item.action.ItemAction" method="addItemProperties">
+		</action>
+		<action name="delItemProperties" class="com.jos.item.action.ItemAction" method="delItemProperties">
+		</action>
+		<action name="addItemDetail" class="com.jos.item.action.ItemAction" method="addItemDetail">
+		</action>
+		<action name="updItemDetail" class="com.jos.item.action.ItemAction" method="updItemDetail">
+		</action>
+		<action name="delItemDetail" class="com.jos.item.action.ItemAction" method="delItemDetail">
+		</action>
+		<action name="addItemStock" class="com.jos.item.action.ItemAction" method="addItemStock">
+		</action>
+		<action name="delItemStock" class="com.jos.item.action.ItemAction" method="delItemStock">
+		</action>
+		<action name="updItemStock" class="com.jos.item.action.ItemAction" method="updItemStock">
+		</action>
+		<action name="addItemPrice" class="com.jos.item.action.ItemAction" method="addItemPrice">
+		</action>
+		<action name="delItemPrice" class="com.jos.item.action.ItemAction" method="delItemPrice">
+		</action>
+		<action name="updItemPrice" class="com.jos.item.action.ItemAction" method="updItemPrice">
+		</action>
+		<action name="addItemGallery" class="com.jos.item.action.ItemAction" method="addItemGallery">
+		</action>
+		<action name="delItemGallery" class="com.jos.item.action.ItemAction" method="delItemGallery">
+		</action>
+		<action name="updItemGallery" class="com.jos.item.action.ItemAction" method="updItemGallery">
+		</action>
+		<action name="getItem" class="com.jos.item.action.ItemAction" method="getItem">
+		</action>
+		<action name="getItemList" class="com.jos.item.action.ItemAction" method="getItemList">
+		</action>
+		<action name="getItemStock" class="com.jos.item.action.ItemAction" method="getItemStock">
+		</action>
+		<action name="getItemPrice" class="com.jos.item.action.ItemAction" method="getItemPrice">
+		</action>
+		<action name="getItemGallery" class="com.jos.item.action.ItemAction" method="getItemGallery">
+		</action>
+
+	</package>
+	
+</struts>
