@@ -13,7 +13,7 @@
 		</action>
 		
 		<action name="upd" class="com.jos.address.action.AddressAction" method="upd">
-		</action>
+		</action> 
 		
 		<action name="que" class="com.jos.address.action.AddressAction" method="que">
 		</action>
