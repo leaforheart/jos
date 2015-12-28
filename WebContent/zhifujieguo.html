@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+<div class="include-page" data-src="public/head-top.html"></div>
+    <div class="zhifujieguo-page main">
+        <div class="include-page" data-src="public/head.html"></div>
+        <div class="shop-step-box">
+            <div class="order-detail-info">
+                <div class="order-detail-head">
+                    订单号：200020151215151400
+                </div>
+                <p class="p1">亲,恭喜！您已成功付款!</p>
+                <p class="p2">我们会尽快为您安排发货，请您耐心等待！</p>
+                <a href="##" class="a1">查看我的订单>></a>
+                <span class="span">或</span>
+                <a href="##" class="a1">回到首页>></a>
+            </div>
+        </div>
+
+    </div>
+<div class="include-page" data-src="public/foot.html"></div>
+<div class="include-page" data-src="public/loginDialog.html"></div>
+<div class="ef-dialog-box">
+    <div class="ef-dialog pay-dialog" style="display: none;">
+        <a class="icon close" href="##"></a>
+        <h2 class="h2">支付</h2>
+        <p class="p">请您在新打开的支付页面进行支付，支付完成前请勿关闭该窗口。</p>
+        <a href="##" class="btn">已完成支付</a>
+        <a href="##" class="btn pro-btn">支付遇到问题</a>
+        <a href="##" class="pay">选择其他支付方式</a>
+    </div>
+    <div class="ef-dialog pay-way-dialog" style="display: none;">
+        <a class="icon close" href="##"></a>
+        <h2 class="h2">支付</h2>
+        <p class="p">使用支付平台支付</p>
+        <label for="" class="pay-label" style="padding-left: 10px;">
+            <i class="icon radio"></i>
+            <img src="img/zhifubao.png" alt="" class="img"/>
+        </label>
+        <p class="p">使用银行卡支付</p>
+        <div class="pay-wrap">
+            <div class="pay-box cl">
+                <label for="" class="pay-label">
+                    <i class="icon radio"></i>
+                    <img src="img/zhaoshangyinhang.png" alt="" class="img"/>
+                </label>
+                <label for="" class="pay-label">
+                    <i class="icon radio"></i>
+                    <img src="img/zhaoshangyinhang.png" alt="" class="img"/>
+                </label>
+                <label for="" class="pay-label">
+                    <i class="icon radio"></i>
+                    <img src="img/zhaoshangyinhang.png" alt="" class="img"/>
+                </label>
+                <label for="" class="pay-label">
+                    <i class="icon radio"></i>
+                    <img src="img/zhaoshangyinhang.png" alt="" class="img"/>
+                </label>
+                <label for="" class="pay-label">
+                    <i class="icon radio"></i>
+                    <img src="img/zhaoshangyinhang.png" alt="" class="img"/>
+                </label>
+            </div>
+        </div>
+        <div class="tr" style="padding: 30px 0;">
+            <a href="##" class="btn">确定</a>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="js/lib/jquery1.7.js"></script>
+<script type="text/javascript" src="js/include.js"></script>
+<script type="text/javascript" src="js/public.js"></script>
+<script type="text/javascript">
+    $(function () {
+       $(".pay-btn").on("click", function () {
+           var $dialog = $(".pay-way-dialog");
+           var height = $dialog.height();
+           $dialog.show().css({
+               "margin-top":-height/2+"px"
+           });
+
+       });
+    });
+</script>
+</html>

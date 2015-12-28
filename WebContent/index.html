@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>列表页面</title>
+    <link rel="stylesheet" href="css/reset.css"/>
+    <style type="text/css">
+        a{
+            color: #000;
+            float: left;
+            width: 33%;
+            text-align: center;
+            font-size: 20px;
+            margin-top: 30px;
+        }
+        a:hover{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+</body>
+<script type="text/javascript" src="js/lib/jquery1.7.js"></script>
+<script type="text/javascript">
+    $(function(){
+       var list = [
+           {name:"首页",src:"shouye.html"},
+           {name:"详情页",src:"xiangqingye.html"},
+           {name:"个性定制列表",src:"gexingdingzhiliebiao.html"},
+           {name:"详情展示",src:"xiangqingzhanshi.html"},
+           {name:"立即支付",src:"lijizhifu.html"},
+           {name:"支付结果",src:"zhifujieguo.html"},
+           {name:"确认订单",src:"querendingdan.html"},
+           {name:"我的礼券",src:"wodeliquan.html"},
+           {name:"我的收货地址",src:"wodeshouhuodizhi.html"},
+           {name:"我的收藏",src:"wodeshoucang.html"},
+           {name:"账户信息",src:"zhanghuxinxi.html"},
+           {name:"购物车列表",src:"gouwcheliebiao.html"},
+           {name:"订单详情",src:"dingdanxiangqing.html"},
+           {name:"用户协议",src:"yonghuxieyi.html"},
+           {name:"个性定制",src:"gexingdingzhi.html"},
+           {name:"系列列表",src:"xilieliebiao.html"},
+       ]
+        var length = list.length;
+        var html = "";
+        for(var i=0;i<length;i++){
+            html += "<a href = '"+list[i].src+"'target='_blank'>【"+list[i].name+"】</a>";
+        }
+        $("body").html(html);
+    });
+</script>
+</html>
