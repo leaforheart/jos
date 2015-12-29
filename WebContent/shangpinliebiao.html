@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>商品列表</title>
+    <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+<div class="include-page" data-src="public/head-top.html"></div>
+    <div class="shangpinliebiao-page main">
+        <div class="include-page" data-src="public/head.html"></div>
+        <div class="top-banner ef-slide">
+            <ul>
+                <li>
+                    <a href="##" class="a">
+                        <img src="img/temp/b1.png" alt="" class="img"/>
+                    </a>
+                </li>
+                <li>
+                    <a href="##" class="a">
+                        <img src="img/temp/b1.png" alt="" class="img"/>
+                    </a>
+                </li>
+                <li>
+                    <a href="##" class="a">
+                        <img src="img/temp/b1.png" alt="" class="img"/>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="include-page" data-src="public/order.html"></div>
+        <div class="product-box">
+        </div>
+        <div class="include-page" data-src="public/pagination.html"></div>
+    </div>
+<div class="include-page" data-src="public/foot.html"></div>
+<div class="include-page" data-src="public/loginDialog.html"></div>
+</body>
+<script type="text/javascript" src="js/lib/jquery1.7.js"></script>
+<script type="text/javascript" src="js/include.js"></script>
+<script type="text/javascript" src="js/public.js"></script>
+<script type="text/javascript">
+        $(function () {
+            new Slide({
+                loopPlay:true,
+                autoPlay:true,
+                navigateBtn:true,
+                navigateBtnType:"icon",
+                slideBtn:true
+            }).start();
+
+            /*
+            * 参数说明：
+            * src:图片链接
+            * name:商品名称
+            * price:商品价格
+            * */
+            var products = [{
+                src:"img/temp/4.png",
+                name:"Ksana十二星座系列锁骨链",
+                link:"xiangqingye.html",
+                price:399.00
+            },{
+                src:"img/temp/4.png",
+                name:"Ksana十二星座系列锁骨链",
+                link:"xiangqingye.html",
+                price:399.00
+            },{
+                src:"img/temp/4.png",
+                name:"Ksana十二星座系列锁骨链",
+                link:"xiangqingye.html",
+                price:399.00
+            },{
+                src:"img/temp/4.png",
+                name:"Ksana十二星座系列锁骨链",
+                link:"xiangqingye.html",
+                price:399.00
+            },{
+                src:"img/temp/4.png",
+                name:"Ksana十二星座系列锁骨链",
+                link:"xiangqingye.html",
+                price:399.00
+            },{
+                src:"img/temp/4.png",
+                name:"Ksana十二星座系列锁骨链",
+                link:"xiangqingye.html",
+                price:399.00
+            },{
+                src:"img/temp/4.png",
+                name:"Ksana十二星座系列锁骨链",
+                link:"xiangqingye.html",
+                price:399.00
+            },{
+                src:"img/temp/4.png",
+                name:"Ksana十二星座系列锁骨链",
+                link:"xiangqingye.html",
+                price:399.00
+            },{
+                src:"img/temp/4.png",
+                name:"Ksana十二星座系列锁骨链",
+                link:"xiangqingye.html",
+                price:399.00
+            },{
+                src:"img/temp/4.png",
+                name:"Ksana十二星座系列锁骨链",
+                link:"xiangqingye.html",
+                price:399.00
+            },{
+                src:"img/temp/4.png",
+                name:"Ksana十二星座系列锁骨链",
+                link:"xiangqingye.html",
+                price:399.00
+            },{
+                src:"img/temp/4.png",
+                name:"Ksana十二星座系列锁骨链",
+                link:"xiangqingye.html",
+                price:399.00
+            },{
+                src:"img/temp/4.png",
+                name:"Ksana十二星座系列锁骨链",
+                link:"xiangqingye.html",
+                price:399.00
+            },{
+                src:"img/temp/4.png",
+                name:"Ksana十二星座系列锁骨链",
+                link:"xiangqingye.html",
+                price:399.00
+            },{
+                src:"img/temp/4.png",
+                name:"Ksana十二星座系列锁骨链",
+                link:"xiangqingye.html",
+                price:399.00
+            },{
+                src:"img/temp/4.png",
+                name:"Ksana十二星座系列锁骨链",
+                link:"xiangqingye.html",
+                price:399.00
+            },{
+                src:"img/temp/4.png",
+                name:"Ksana十二星座系列锁骨链",
+                link:"xiangqingye.html",
+                price:399.00
+            }];
+            /*
+            * 参数说明:
+            * src:图片链接
+            * row:第几行
+            * column:第几列
+            * colspan:跨几列
+            *
+            * 广告的显示位置、跨列数都可以自由配置
+            * */
+            var advs = [{
+                src:"img/temp/9.png",
+                link:"##",
+                row:2,
+                column:2,
+                colspan:2
+            },{
+                src:"img/temp/9.png",
+                link:"##",
+                row:4,
+                column:2,
+                colspan:3
+            }];
+            //商品列表布局
+            (function (products,advs) {
+                /*
+                * columnMax:单行可以显示多少个
+                * index:当前单个显示多少个
+                * marginTop:上下间距
+                * marginLeft:左右间距
+                * productHeight:单个宽度
+                * productWidth:单个高度
+                * 样式已固定，请勿修改参数
+                * */
+                var index = sumColspan = 0,columnMax = 4,marginTop = 10,marginLeft = 12,productHeight = productWidth = 291;
+
+                function getProductRow(index){
+                    return Math.floor(index/columnMax);
+                }
+                function getProductColumn(index){
+                    return index%columnMax;
+                }
+                function getTop(row){
+                    return row * (productHeight + marginTop);
+                }
+                function getRowMax(arr){
+                    return Math.ceil((arr.length+sumColspan)/columnMax);
+                }
+                function getAdvWidth(column){
+                    return (column-1)*marginLeft + column * productWidth;
+                }
+                function getProductHtml(arr,arr2){
+                    var html = "",offsetTop = column = row = 0;
+                    for(var i= 0,length = arr.length;i<length;i++){
+                        /*计算列和行*/
+                        column = getProductColumn(index);
+                        row = getProductRow(index);
+                        for(var j = 0;j<arr2.length;j++){
+                            /*当遇到广告的时候，重置下标*/
+                            if(arr2[j].row - 1 == row){
+                                if(arr2[j].column-1 == column){
+                                    /*重置下标、列、行*/
+                                    index = index + arr2[j].colspan;
+                                    row = getProductRow(index);
+                                    column = getProductColumn(index);
+                                }
+                            }
+                        }
+                        offsetTop = getTop(row);
+                        html += '<a href="'+arr[i].link+'" class="product-wrap col'+column+'" style="top:'+offsetTop+'px;">';
+                        html += '<img src="'+arr[i].src+'" alt="" class="img"/>';
+                        html += '<p class="p">'+arr[i].name+'</p>';
+                        html += '<p class="p1">RMB '+arr[i].price+'</p>';
+                        html += '<div class="img-mask"></div></a>';
+
+                        index++;
+                    }
+                    return html;
+                }
+                function getAdvHtml(arr){
+                    var html = "",offsetTop = column = width = 0,obj={};
+                    for(var i= 0,length = arr.length;i<length;i++){
+                        column = arr[i].column-1;
+                        offsetTop = getTop(arr[i].row-1);
+                        width = getAdvWidth(arr[i].colspan);
+
+                        html += '<a href="'+arr[i].link+'" class="product-adv-wrap col'+column+'" style="top:'+offsetTop+'px;width:'+width+'px;">';
+                        html += '<img src="'+arr[i].src+'" alt="" class="adv-img" style="width:'+width+'px"/>';
+                        html += '</a>';
+                        sumColspan += arr[i].colspan;
+                    }
+                    $(".product-box").append(html);
+                    return html;
+                }
+                var html1 = getAdvHtml(advs);
+                var html2 = getProductHtml(products,advs);
+                var height = getRowMax(products) * (productHeight+marginTop) - marginTop;
+                $(".product-box").css({
+                    height:height + 'px'
+                }).append(html1).append(html2);
+            })(products,advs);
+        });
+</script>
+</html>

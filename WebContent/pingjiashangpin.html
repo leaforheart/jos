@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>评价商品</title>
+    <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+<div class="include-page" data-src="public/head-top.html"></div>
+    <div class="pingjiaxiangqing-page main">
+        <div class="include-page" data-src="public/head.html"></div>
+        <div class="detail-box">
+            <div class="user-navi">
+                <a href="##" class="a">订单中心</a>
+                &gt;
+                <a href="##" class="a">我的评价</a>
+            </div>
+            <div class="evolu-box">
+                <div class="evolu-head">
+                    我的评价
+                </div>
+                <div class="evolu-wrap">
+                    <div class="order-box">
+                        <div class="order-head">
+                            订单号：20015458411651321
+                        </div>
+                        <div class="order-body">
+                            <div class="order-wrap">
+                                <a href="##" class="a">
+                                    <img src="img/temp/4.png" alt="" class="img"/>
+                                </a>
+                                <div class="p1">
+                                    <a href="##" class="a1">爱心锁吊坠</a>
+                                    <div class="icon star star1">
+                                        <a href="##" class="star-oper" data-index="1"></a>
+                                        <a href="##" class="star-oper" data-index="2"></a>
+                                        <a href="##" class="star-oper" data-index="3"></a>
+                                        <a href="##" class="star-oper" data-index="4"></a>
+                                        <a href="##" class="star-oper" data-index="5"></a>
+                                    </div>
+                                </div>
+                                <textarea class="textarea">不错，精彩</textarea>
+                            </div>
+                            <div class="tr">
+                                <a href="##" class="btn">确定</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="order-box">
+                        <div class="order-head">
+                            订单号：20015458411651321
+                        </div>
+                        <div class="order-body">
+                            <div class="order-wrap">
+                                <a href="##" class="a">
+                                    <img src="img/temp/4.png" alt="" class="img"/>
+                                </a>
+                                <div class="p1">
+                                    <a href="##" class="a1">爱心锁吊坠</a>
+                                    <div class="icon star star1">
+                                        <a href="##" class="star-oper" data-index="1"></a>
+                                        <a href="##" class="star-oper" data-index="2"></a>
+                                        <a href="##" class="star-oper" data-index="3"></a>
+                                        <a href="##" class="star-oper" data-index="4"></a>
+                                        <a href="##" class="star-oper" data-index="5"></a>
+                                    </div>
+                                </div>
+                                <textarea class="textarea">不错，精彩</textarea>
+                            </div>
+                            <div class="order-wrap">
+                                <a href="##" class="a">
+                                    <img src="img/temp/4.png" alt="" class="img"/>
+                                </a>
+                                <div class="p1">
+                                    <a href="##" class="a1">爱心锁吊坠</a>
+                                    <div class="icon star star1">
+                                        <a href="##" class="star-oper" data-index="1"></a>
+                                        <a href="##" class="star-oper" data-index="2"></a>
+                                        <a href="##" class="star-oper" data-index="3"></a>
+                                        <a href="##" class="star-oper" data-index="4"></a>
+                                        <a href="##" class="star-oper" data-index="5"></a>
+                                    </div>
+                                </div>
+                                <textarea class="textarea">不错，精彩</textarea>
+                            </div>
+                            <div class="order-wrap">
+                                <a href="##" class="a">
+                                    <img src="img/temp/4.png" alt="" class="img"/>
+                                </a>
+                                <div class="p1">
+                                    <a href="##" class="a1">爱心锁吊坠</a>
+                                    <div class="icon star star1">
+                                        <a href="##" class="star-oper" data-index="1"></a>
+                                        <a href="##" class="star-oper" data-index="2"></a>
+                                        <a href="##" class="star-oper" data-index="3"></a>
+                                        <a href="##" class="star-oper" data-index="4"></a>
+                                        <a href="##" class="star-oper" data-index="5"></a>
+                                    </div>
+                                </div>
+                                <textarea class="textarea">不错，精彩</textarea>
+                            </div>
+                            <div class="tr">
+                                <a href="##" class="btn">确定</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+<div class="include-page" data-src="public/foot.html"></div>
+<div class="include-page" data-src="public/loginDialog.html"></div>
+</body>
+<script type="text/javascript" src="js/lib/jquery1.7.js"></script>
+<script type="text/javascript" src="js/include.js"></script>
+<script type="text/javascript" src="js/public.js"></script>
+<script type="text/javascript">
+    $(function () {
+       $(".star").on("click",".star-oper", function () {
+           var index = $(this).data("index");
+           $(this).parent().attr("class","icon star star"+index);
+       })
+    });
+</script>
+</html>
