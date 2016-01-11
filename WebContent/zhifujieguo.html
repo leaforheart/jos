@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>支付结果</title>
+    <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+<div class="include-page" data-src="public/head-top.html"></div>
+    <div class="zhifujieguo-page main">
+        <div class="include-page" data-src="public/head.html"></div>
+        <div class="shop-step-box">
+            <div class="order-detail-info">
+                <div class="order-detail-head">
+                    订单号：200020151215151400
+                </div>
+                <p class="p1">亲,恭喜！您已成功付款!</p>
+                <p class="p2">我们会尽快为您安排发货，请您耐心等待！</p>
+                <a href="wodedingdan.html" class="a1">查看我的订单>></a>
+                <span class="span">或</span>
+                <a href="shouye.html" class="a1">回到首页>></a>
+            </div>
+        </div>
+
+    </div>
+<div class="include-page" data-src="public/foot.html"></div>
+<div class="include-page" data-src="public/loginDialog.html"></div>
+</body>
+<script type="text/javascript" src="js/lib/jquery1.7.js"></script>
+<script type="text/javascript" src="js/include.js"></script>
+<script type="text/javascript" src="js/public.js"></script>
+<script type="text/javascript">
+    $(function () {
+       $(".pay-btn").on("click", function () {
+           var $dialog = $(".pay-way-dialog");
+           var height = $dialog.height();
+           $dialog.show().css({
+               "margin-top":-height/2+"px"
+           });
+
+       });
+    });
+</script>
+</html>
