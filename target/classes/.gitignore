@@ -1,9 +1,1 @@
-/Demo.class
-/Test.class
-/applicationContext-resources.xml
-/applicationContext-service.xml
 /com/
-/db-connection.properties
-/jos.properties
-/log4j.xml
-/struts.xml

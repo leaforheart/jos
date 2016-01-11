@@ -9,5 +9,7 @@ public interface CartService extends IBaseService {
 	HashMap<String,Object> add(CartBean cartBean);
 	HashMap<String,Object> upd(CartBean cartBean);
 	HashMap<String,Object> del(CartBean cartBean);
-	HashMap<String,Object> que(CartBean cartBean);
+	HashMap<String,Object> que();
+	HashMap<String,Object> clear();
+	HashMap<String, Object> remove(String[] ids);
 }

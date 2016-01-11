@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -48,6 +49,35 @@ public class Cart extends BaseModel {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date lastUpdateTime;
 	
+	@Transient
+	private double price;
+	
+	@Transient
+	private double discount;
+	
+	@Transient
+	private double realPrice;
+	
+	
+	
+	public double getDiscount() {
+		return discount;
+	}
+	public void setDiscount(double discount) {
+		this.discount = discount;
+	}
+	public double getRealPrice() {
+		return realPrice;
+	}
+	public void setRealPrice(double realPrice) {
+		this.realPrice = realPrice;
+	}
+	public double getPrice() {
+		return price;
+	}
+	public void setPrice(double price) {
+		this.price = price;
+	}
 	public String getId() {
 		return id;
 	}

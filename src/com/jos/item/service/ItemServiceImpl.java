@@ -44,6 +44,7 @@ public class ItemServiceImpl extends AbstractBaseService implements ItemService 
 		} catch (Exception e) {
 			e.printStackTrace();
 			map.put(Constants.RETURN_CODE, Constants.SEVER_ERROR);
+			return map;
 		}
 		
 		return map;

@@ -5,10 +5,18 @@
 <struts>
 
 	<package name="jos-cart" extends="jos-default" namespace="/cart">
-	
 		<action name="add" class="com.jos.cart.action.CartAction" method="add">
 		</action>
-		
+		<action name="upd" class="com.jos.cart.action.CartAction" method="upd">
+		</action>
+		<action name="del" class="com.jos.cart.action.CartAction" method="del">
+		</action>
+		<action name="que" class="com.jos.cart.action.CartAction" method="que">
+		</action>
+		<action name="clear" class="com.jos.cart.action.CartAction" method="clear">
+		</action>
+		<action name="remove" class="com.jos.cart.action.CartAction" method="remove">
+		</action>
 	</package>
 	
 </struts>

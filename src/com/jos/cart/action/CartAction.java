@@ -53,7 +53,12 @@ public class CartAction extends BaseAction implements ModelDriven {
 		this.writeToClient(JsonUtil.getJsonStrByConfigFromMap(cartService.del(cartBean)));
 	}
 	public void que(){
-		this.writeToClient(JsonUtil.getJsonStrByConfigFromMap(cartService.que(cartBean)));
+		this.writeToClient(JsonUtil.getJsonStrByConfigFromMap(cartService.que()));
 	}
-
+	public void clear(){
+		this.writeToClient(JsonUtil.getJsonStrByConfigFromMap(cartService.clear()));
+	}
+	public void remove() {
+		this.writeToClient(JsonUtil.getJsonStrByConfigFromMap(cartService.remove(cartBean.getIds())));
+	}
 }
