@@ -2,9 +2,12 @@ package com.jos.image;
 
 import java.io.File;
 import java.util.Date;
+
 import javax.imageio.ImageIO;
+
 import net.coobird.thumbnailator.Thumbnails;
 import net.coobird.thumbnailator.geometry.Positions;
+
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.Imaging;
@@ -15,6 +18,11 @@ import org.apache.commons.imaging.formats.tiff.constants.ExifTagConstants;
 import org.apache.commons.imaging.formats.tiff.constants.GpsTagConstants;
 
 public class ImageUtil {
+	
+//	public static void main(String[] args) throws Exception {
+//		Image image = sizeImage("C:\\Users\\Administrator\\Desktop\\图片\\IMG_20160101_153613.jpg", 200, 200, "C:\\Users\\Administrator\\Desktop\\图片\\wo\\IMG_20160101_153613.jpg", null, 0);
+//		System.out.println(image);
+//	}
 	
 	public static Image saveImage(File file,String dest,String url,int type) throws Exception {
 		checkImage(file);
@@ -47,6 +55,7 @@ public class ImageUtil {
 	public static Image sizeImage(String src,int width,int height,String dest,String url,int type) throws Exception {
 		File file = new File(src);
 		checkImage(file);
+		FileByteBuffUtil.createDir(dest.substring(0,dest.lastIndexOf(File.separator)));
 		Thumbnails.of(src).size(width, height).toFile(dest);
 		Image image = genImage(dest,url,type);
 		return image;
@@ -55,6 +64,7 @@ public class ImageUtil {
 	public static Image watermarkImage(String src,String watermark,String dest,String url,int type) throws Exception {
 		File file = new File(src);
 		checkImage(file);
+		FileByteBuffUtil.createDir(dest.substring(0,dest.lastIndexOf(File.separator)));
 		ImageInfo imageInfo = Imaging.getImageInfo(file);
 		Thumbnails.of(src).size(imageInfo.getWidth(), imageInfo.getHeight()).watermark(Positions.BOTTOM_RIGHT, ImageIO.read(new File(watermark)), 0.8f).outputQuality(1f).toFile(dest);
 		Image image = genImage(dest,url,type);
@@ -64,6 +74,7 @@ public class ImageUtil {
 	public static Image sizeWatermarkImage(String src,int width,int height,String watermark,String dest,String url,int type) throws Exception {
 		File file = new File(src);
 		checkImage(file);
+		FileByteBuffUtil.createDir(dest.substring(0,dest.lastIndexOf(File.separator)));
 		Thumbnails.of(src).size(width, height).watermark(Positions.BOTTOM_RIGHT, ImageIO.read(new File(watermark)), 0.8f).outputQuality(1f).toFile(dest);
 		Image image = genImage(dest,url,type);
 		return image;

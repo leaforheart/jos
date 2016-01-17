@@ -157,4 +157,11 @@ public class FileByteBuffUtil {
 		ByteBuffer buf = FileByteBuffUtil.fileToByteBuffer(file, capacity);
 		FileByteBuffUtil.byteBufferToFile(buf, dest.substring(0,dest.lastIndexOf(File.separator)),dest.substring(dest.lastIndexOf(File.separator)+1));
 	}
+	
+	public static void createDir(String dir) {
+		File file = new File(dir);
+		if(!file.exists()) {
+			file.mkdirs();
+		}
+	}
 }
