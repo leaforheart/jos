@@ -49,6 +49,8 @@
 				<value>com.jos.order.model.OrderItem</value>
 				<value>com.jos.dictionary.model.Dictionary</value>
 				<value>com.jos.image.Image</value>
+				<value>com.jos.item.model.ImageTmp</value>
+				<value>com.jos.item.model.ItemGalleryTmp</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">

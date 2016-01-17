@@ -17,10 +17,10 @@ import org.hibernate.annotations.GenericGenerator;
 
 import com.inveno.base.BaseModel;
 @Entity
-@Table(name = "jos_item_gallery")
+@Table(name = "jos_item_gallery_tmp")
 @org.hibernate.annotations.Entity(dynamicInsert = true, dynamicUpdate = true)
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class ItemGallery extends BaseModel {
+public class ItemGalleryTmp extends BaseModel {
 	private static final long serialVersionUID = 285403697463292037L;
 	
 	@Id

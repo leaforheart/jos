@@ -596,7 +596,7 @@ public class ItemServiceImpl extends AbstractBaseService implements ItemService 
 	}
 
 	@Override
-	public HashMap<String, Object> getItemGallery(ItemBean itemBean) {
+	public HashMap<String, Object> getSmallItemGallery(ItemBean itemBean) {
 		HashMap<String,Object> map = new HashMap<String,Object>();
 		try {
 			
@@ -604,6 +604,24 @@ public class ItemServiceImpl extends AbstractBaseService implements ItemService 
 			
 		}
 		return map;
+	}
+
+	@Override
+	public HashMap<String, Object> addImage(ItemBean itemBean) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public HashMap<String, Object> delImage(ItemBean itemBean) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public HashMap<String, Object> getImage(ItemBean itemBean) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

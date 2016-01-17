@@ -114,8 +114,8 @@ public class ItemAction extends BaseAction implements ModelDriven  {
 	public void getItemPrice(){
 		this.writeToClient(JsonUtil.getJsonStrByConfigFromMap(itemService.getItemPrice(itemBean)));
 	}
-	public void getItemGallery(){
-		this.writeToClient(JsonUtil.getJsonStrByConfigFromMap(itemService.getItemGallery(itemBean)));
+	public void getSmallItemGallery(){
+		this.writeToClient(JsonUtil.getJsonStrByConfigFromMap(itemService.getSmallItemGallery(itemBean)));
 	}
 
 }
