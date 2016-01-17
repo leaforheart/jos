@@ -2,22 +2,77 @@ package com.jos.image;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.GenericGenerator;
+@Entity
+@Table(name = "jos_image")
+@org.hibernate.annotations.Entity(dynamicInsert = true, dynamicUpdate = true)
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Image {
+	@Id
+	@Column(name = "id")
+	@GeneratedValue(generator = "ImageGenerate", strategy = GenerationType.IDENTITY)
+	@GenericGenerator(name = "ImageGenerate", strategy = "native")
+	private String id;
+	//原图id
+	@Column(name = "original_id")
+	private String originalId;
+	
+	@Column(name = "name")
 	private String name;
 	//-1临时图  0原图 1处理后的大图 2缩略图
+	
+	@Column(name = "type")
 	private int type;
+	
+	@Column(name = "mime_type")
 	private String mimeType;
+	
+	@Column(name = "format")
 	private String format;
+	
+	@Column(name = "compression_algorithm")
 	private String compressionAlgorithm;
+	
+	@Column(name = "path")
 	private String path;
+	
+	@Column(name = "url")
 	private String url;
+	
+	@Column(name = "size")
 	private long size;
+	
+	@Column(name = "width")
 	private int width;
+	
+	@Column(name = "height")
 	private int height;
+	
+	@Column(name = "altitude")
 	private String altitude ;//海拔
+	
+	@Column(name = "latitude")
 	private double latitude;//纬度
+	
+	@Column(name = "longitude")
 	private double longitude ;//经度
+	
+	@Column(name = "original_date_time")
 	private String originalDateTime;
+	
+	@Column(name = "last_update_time")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date lastUpdateTime;
 	
 	public String getOriginalDateTime() {

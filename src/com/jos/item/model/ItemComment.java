@@ -1,5 +1,7 @@
 package com.jos.item.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -45,11 +47,11 @@ public class ItemComment extends BaseModel {
 	
 	@Column(name = "create_time")
 	@Temporal(TemporalType.TIMESTAMP)
-	private String createTime;
+	private Date createTime;
 	
 	@Column(name = "last_update_time")
 	@Temporal(TemporalType.TIMESTAMP)
-	private String lastUpdateTime;
+	private Date lastUpdateTime;
 	
 	public String getId() {
 		return id;
@@ -87,16 +89,16 @@ public class ItemComment extends BaseModel {
 	public void setExplanation(String explanation) {
 		this.explanation = explanation;
 	}
-	public String getCreateTime() {
+	public Date getCreateTime() {
 		return createTime;
 	}
-	public void setCreateTime(String createTime) {
+	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
-	public String getLastUpdateTime() {
+	public Date getLastUpdateTime() {
 		return lastUpdateTime;
 	}
-	public void setLastUpdateTime(String lastUpdateTime) {
+	public void setLastUpdateTime(Date lastUpdateTime) {
 		this.lastUpdateTime = lastUpdateTime;
 	}
 	

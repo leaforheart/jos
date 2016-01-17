@@ -48,6 +48,7 @@
 				<value>com.jos.order.model.Order</value>
 				<value>com.jos.order.model.OrderItem</value>
 				<value>com.jos.dictionary.model.Dictionary</value>
+				<value>com.jos.image.Image</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">

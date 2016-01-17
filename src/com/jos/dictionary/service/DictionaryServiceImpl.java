@@ -3,9 +3,22 @@ package com.jos.dictionary.service;
 import java.util.HashMap;
 
 import com.jos.common.baseclass.AbstractBaseService;
+import com.jos.dictionary.dao.DictionaryDao;
 import com.jos.dictionary.vo.DictionaryBean;
 
 public class DictionaryServiceImpl extends AbstractBaseService implements DictionaryService {
+	
+	private DictionaryDao dictionaryDao;
+	
+	
+
+	public DictionaryDao getDictionaryDao() {
+		return dictionaryDao;
+	}
+
+	public void setDictionaryDao(DictionaryDao dictionaryDao) {
+		this.dictionaryDao = dictionaryDao;
+	}
 
 	@Override
 	public HashMap<String, Object> addValue(DictionaryBean dictionaryBean) {

@@ -41,11 +41,8 @@ public class ItemGallery extends BaseModel {
 	@Column(name = "type")
 	private String type;
 	
-	@Column(name = "path")
-	private String path;
-	
-	@Column(name = "is_default")
-	private String isDefault;
+	@Column(name = "image_id")
+	private String imageId;
 	
 	@Column(name = "create_time")
 	@Temporal(TemporalType.TIMESTAMP)
@@ -54,4 +51,70 @@ public class ItemGallery extends BaseModel {
 	@Column(name = "last_update_time")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date lastUpdateTime;
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getItemId() {
+		return itemId;
+	}
+
+	public void setItemId(String itemId) {
+		this.itemId = itemId;
+	}
+
+	public String getItemProperties() {
+		return itemProperties;
+	}
+
+	public void setItemProperties(String itemProperties) {
+		this.itemProperties = itemProperties;
+	}
+
+	public String getSequence() {
+		return sequence;
+	}
+
+	public void setSequence(String sequence) {
+		this.sequence = sequence;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public String getImageId() {
+		return imageId;
+	}
+
+	public void setImageId(String imageId) {
+		this.imageId = imageId;
+	}
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	public Date getLastUpdateTime() {
+		return lastUpdateTime;
+	}
+
+	public void setLastUpdateTime(Date lastUpdateTime) {
+		this.lastUpdateTime = lastUpdateTime;
+	}
+	
+	
 }
