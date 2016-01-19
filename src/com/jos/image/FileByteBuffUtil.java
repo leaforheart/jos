@@ -164,4 +164,11 @@ public class FileByteBuffUtil {
 			file.mkdirs();
 		}
 	}
+	
+	public static String getUuidName(String filedataFileName) {
+		String[] partName = filedataFileName.split("\\.");
+		int maxLen = partName.length - 1;
+		String fileNameTemp = partName[maxLen];
+		return System.nanoTime() + "." + fileNameTemp;
+	}
 }

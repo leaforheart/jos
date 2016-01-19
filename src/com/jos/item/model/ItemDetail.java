@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -50,6 +51,15 @@ public class ItemDetail extends BaseModel {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date lastUpdateTime;
 	
+	@Transient
+	private String path;
+	
+	public String getPath() {
+		return path;
+	}
+	public void setPath(String path) {
+		this.path = path;
+	}
 	public String getId() {
 		return id;
 	}

@@ -14,11 +14,14 @@ import javax.persistence.TemporalType;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
+
+import com.inveno.base.BaseModel;
 @Entity
 @Table(name = "jos_image")
 @org.hibernate.annotations.Entity(dynamicInsert = true, dynamicUpdate = true)
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Image {
+public class Image extends BaseModel {
+	private static final long serialVersionUID = 5198449525203317649L;
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(generator = "ImageGenerate", strategy = GenerationType.IDENTITY)
@@ -75,6 +78,18 @@ public class Image {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date lastUpdateTime;
 	
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	public String getOriginalId() {
+		return originalId;
+	}
+	public void setOriginalId(String originalId) {
+		this.originalId = originalId;
+	}
 	public String getOriginalDateTime() {
 		return originalDateTime;
 	}

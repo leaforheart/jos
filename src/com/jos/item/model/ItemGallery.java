@@ -35,11 +35,11 @@ public class ItemGallery extends BaseModel {
 	@Column(name = "item_properties")
 	private String itemProperties;
 	
-	@Column(name = "type")
-	private String type;
-	
 	@Column(name = "image_id")
 	private String imageId;
+	
+	@Column(name = "is_default")
+	private int isDefault;
 	
 	@Column(name = "create_time")
 	@Temporal(TemporalType.TIMESTAMP)
@@ -48,6 +48,16 @@ public class ItemGallery extends BaseModel {
 	@Column(name = "last_update_time")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date lastUpdateTime;
+	
+	
+	
+	public int getIsDefault() {
+		return isDefault;
+	}
+
+	public void setIsDefault(int isDefault) {
+		this.isDefault = isDefault;
+	}
 
 	public String getId() {
 		return id;
@@ -71,14 +81,6 @@ public class ItemGallery extends BaseModel {
 
 	public void setItemProperties(String itemProperties) {
 		this.itemProperties = itemProperties;
-	}
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
 	}
 
 	public String getImageId() {

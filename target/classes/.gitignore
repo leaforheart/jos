@@ -1,1 +1,10 @@
+/db-connection.properties
+/.gitignore
+/applicationContext-resources.xml
+/applicationContext-service.xml
 /com/
+/jos.properties
+/log4j.xml
+/struts.xml
+/Demo.class
+/Test.class

@@ -35,9 +35,6 @@ public class ItemGalleryTmp extends BaseModel {
 	@Column(name = "item_properties")
 	private String itemProperties;
 	
-	@Column(name = "type")
-	private String type;
-	
 	@Column(name = "image_id")
 	private String imageId;
 	
@@ -71,14 +68,6 @@ public class ItemGalleryTmp extends BaseModel {
 
 	public void setItemProperties(String itemProperties) {
 		this.itemProperties = itemProperties;
-	}
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
 	}
 
 	public String getImageId() {

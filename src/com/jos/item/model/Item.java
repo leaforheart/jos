@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -53,6 +54,15 @@ public class Item extends BaseModel {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date lastUpdateTime;
 	
+	@Transient
+	private String defaultImageUrl;
+	
+	public String getDefaultImageUrl() {
+		return defaultImageUrl;
+	}
+	public void setDefaultImageUrl(String defaultImageUrl) {
+		this.defaultImageUrl = defaultImageUrl;
+	}
 	public String getId() {
 		return id;
 	}
