@@ -85,6 +85,7 @@ public class AuthenticateServiceImpl extends AbstractBaseService implements Auth
 			cookie.setPath("/");
 			
 			map.put("cookie",cookie);
+			map.put(Constants.RETURN_CODE, Constants.SUCCESS_CODE);
 		} catch (Exception e) {
 			map.clear();
 			map.put(Constants.RETURN_CODE,Constants.SEVER_ERROR);
@@ -149,6 +150,7 @@ public class AuthenticateServiceImpl extends AbstractBaseService implements Auth
 			String newCredential = authenticateBean.getNewCredential();
 			user.setCredential(newCredential);
 			user.setLastUpdateTime(new Date());
+			map.put(Constants.RETURN_CODE, Constants.SUCCESS_CODE);
 		} catch (Exception e) {
 			map.clear();
 			map.put(Constants.RETURN_CODE,Constants.SEVER_ERROR);
@@ -188,6 +190,7 @@ public class AuthenticateServiceImpl extends AbstractBaseService implements Auth
 			}
 			jedis.set(primPrin+Constants.PHONECODE+phoneCodeUse, code);
 			jedis.expire(primPrin+Constants.PHONECODE+phoneCodeUse, 60*10);
+			map.put(Constants.RETURN_CODE,Constants.SUCCESS_CODE);
 		} catch (Exception e) {
 			map.clear();
 			map.put(Constants.RETURN_CODE,Constants.SEVER_ERROR);
@@ -244,6 +247,7 @@ public class AuthenticateServiceImpl extends AbstractBaseService implements Auth
 			cookie.setMaxAge(0);
 			map.put(Constants.RETURN_CODE, Constants.SUCCESS_CODE);
 			map.put("cookie", cookie);
+			map.put(Constants.RETURN_CODE, Constants.SUCCESS_CODE);
 		} catch (Exception e) {
 			map.clear();
 			map.put(Constants.RETURN_CODE,Constants.SEVER_ERROR);
