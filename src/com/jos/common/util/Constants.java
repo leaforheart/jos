@@ -29,4 +29,11 @@ public class Constants{
 	public static String DETAIL_TYPE_WOR="1";
 	public static String DETAIL_TYPE_PIC="2";
 	public static String DETAIL_TYPE_VID="3";
+	public static String CHANNEL_ID="xyc_yd_01";
+	public static String REGISTER_CONTENT="注册码: XXXXXX 易幻首饰欢迎您！10分钟后失效";
+	public static String GETBACK_CONTENT="找回密码: XXXXXX 您正在易幻首饰找回密码，如非本人操作请忽略。10分钟后失效";
+	public static String USECODE_REGISTER="1";
+	public static String USECODE_GETBACK="2";
+	public static String CONTENT_CODE="XXXXXX";
+	public static String REDIS_PATH = "com/jos/redis/redis.properties";
 }

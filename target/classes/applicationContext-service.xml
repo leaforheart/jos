@@ -51,6 +51,7 @@
 				<value>com.jos.image.Image</value>
 				<value>com.jos.item.model.ImageTmp</value>
 				<value>com.jos.item.model.ItemGalleryTmp</value>
+				<value>com.jos.authenticate.model.EmsMtTask</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">

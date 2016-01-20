@@ -14,6 +14,7 @@ import com.inveno.util.CollectionUtils;
 import com.inveno.util.MD5Utils;
 import com.inveno.util.StringUtil;
 import com.jos.authenticate.dao.AuthenticateDao;
+import com.jos.authenticate.model.EmsMtTask;
 import com.jos.authenticate.model.User;
 import com.jos.authenticate.vo.AuthenticateBean;
 import com.jos.common.baseclass.AbstractBaseService;
@@ -101,7 +102,7 @@ public class AuthenticateServiceImpl extends AbstractBaseService implements Auth
 		try {
 			String code = authenticateBean.getPhoneCode();
 			String primPrin = authenticateBean.getUser().getPrimPrin();
-			String codeInRedis = jedis.get(primPrin+Constants.PHONECODE+"1");
+			String codeInRedis = jedis.get(primPrin+Constants.PHONECODE+Constants.USECODE_REGISTER);
 			String credential = authenticateBean.getUser().getCredential();
 			
 			if(codeInRedis==null||!codeInRedis.equals(code)) {
@@ -116,7 +117,7 @@ public class AuthenticateServiceImpl extends AbstractBaseService implements Auth
 			user.setLastUpdateTime(new Date());
 			user.setStatus("0");
 			authenticateDao.save(user);
-			
+			jedis.del(primPrin+Constants.PHONECODE+Constants.USECODE_REGISTER);
 			map.put(Constants.RETURN_CODE, Constants.SUCCESS_CODE);
 		} catch (Exception e) {
 			map.clear();
@@ -180,12 +181,13 @@ public class AuthenticateServiceImpl extends AbstractBaseService implements Auth
 					return map;
 				}
 			}
-			String code = getCode(primPrin);
+			String code = getCode(primPrin,phoneCodeUse);
 			if(StringUtil.isEmpty(code)) {
 				map.put(Constants.RETURN_CODE, "-3");
 				return map;
 			}
 			jedis.set(primPrin+Constants.PHONECODE+phoneCodeUse, code);
+			jedis.expire(primPrin+Constants.PHONECODE+phoneCodeUse, 60*10);
 		} catch (Exception e) {
 			map.clear();
 			map.put(Constants.RETURN_CODE,Constants.SEVER_ERROR);
@@ -196,8 +198,38 @@ public class AuthenticateServiceImpl extends AbstractBaseService implements Auth
 		return map;
 	}
 	
-	private String getCode(String phone) {
-		return null;
+	private String getCode(String phone,String phoneCodeUse) {
+		Jedis jedis = RedisClient.getJedis();
+		String code = "";
+		try {
+			if(StringUtil.isNotEmpty(jedis.get(phone+Constants.PHONECODE+phoneCodeUse))){
+				code = jedis.get(phone+Constants.PHONECODE+phoneCodeUse);
+			}
+			if(StringUtil.isEmpty(code)) {
+				code = String.valueOf(Math.round((Math.random()*9+1)*100000));;
+			}
+			EmsMtTask emt = new EmsMtTask();
+			emt.setTaskId(UUID.randomUUID().toString());
+			emt.setChannelId(Constants.CHANNEL_ID);
+			emt.setCreateTime(new Date());
+			emt.setExt("");
+			if(Constants.USECODE_REGISTER.equals(phoneCodeUse)) {
+				emt.setMsgContent(Constants.REGISTER_CONTENT.replace(Constants.CONTENT_CODE, code));
+			}else if(Constants.USECODE_GETBACK.equals(phoneCodeUse)) {
+				emt.setMsgContent(Constants.GETBACK_CONTENT.replace(Constants.CONTENT_CODE, code));
+			}else {
+				return "";
+			}
+			emt.setPriority(1);
+			emt.setSendTime(new Date());
+			emt.setToMobile(phone);
+			authenticateDao.save(emt);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			RedisClient.returnResource(jedis);
+		} 
+		return code;
 	}
 
 	@Override
@@ -230,7 +262,7 @@ public class AuthenticateServiceImpl extends AbstractBaseService implements Auth
 		try {
 			String code = authenticateBean.getPhoneCode();
 			String primPrin = authenticateBean.getUser().getPrimPrin();
-			String codeInRedis = jedis.get(primPrin+Constants.PHONECODE+"2");
+			String codeInRedis = jedis.get(primPrin+Constants.PHONECODE+Constants.USECODE_GETBACK);
 			if(codeInRedis==null||!codeInRedis.equals(code)) {
 				map.put(Constants.RETURN_CODE,"-1");//验证码错误
 				return map;
@@ -246,6 +278,7 @@ public class AuthenticateServiceImpl extends AbstractBaseService implements Auth
 			User user = list.get(0);
 			user.setCredential(newCredential);
 			user.setLastUpdateTime(new Date());
+			jedis.del(primPrin+Constants.PHONECODE+Constants.USECODE_GETBACK);
 			map.put(Constants.RETURN_CODE, Constants.SUCCESS_CODE);
 		} catch (Exception e) {
 			map.clear();
