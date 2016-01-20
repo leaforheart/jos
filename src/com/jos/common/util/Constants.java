@@ -36,4 +36,6 @@ public class Constants{
 	public static String USECODE_GETBACK="2";
 	public static String CONTENT_CODE="XXXXXX";
 	public static String REDIS_PATH = "com/jos/redis/redis.properties";
+	public static String COOKIE_TIME = "cookieTime";
+	public static String COOKIE_DOMAIN = "cookieDomain";
 }

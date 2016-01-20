@@ -448,7 +448,7 @@ public final class SysContext {
 			return "";
 		}
 		for(Cookie c:cookies) {
-			if("sessionid".equals(c.getName())) {
+			if(Constants.SESSIONID.equals(c.getName())) {
 				uuid = c.getValue();
 			}
 		}

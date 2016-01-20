@@ -2,10 +2,13 @@ package com.jos.authenticate.action;
 
 import java.util.HashMap;
 
+import javax.servlet.http.Cookie;
+
 import com.inveno.util.JsonUtil;
 import com.jos.authenticate.service.AuthenticateService;
 import com.jos.authenticate.vo.AuthenticateBean;
 import com.jos.common.baseclass.BaseAction;
+import com.jos.common.util.Constants;
 import com.jos.common.util.SysContext;
 import com.opensymphony.xwork2.ModelDriven;
 
@@ -40,7 +43,13 @@ public class AuthenticateAction extends BaseAction implements ModelDriven {
 	}
 	
 	public void login(){
-		this.writeToClient(JsonUtil.getJsonStrByConfigFromMap(authenticateService.login(authenticateBean)));
+		HashMap<String,Object> map = authenticateService.login(authenticateBean);
+		Cookie cookie = (Cookie) map.get("cookie");
+		if(cookie!=null) {
+			getResponse().addCookie(cookie);
+			map.remove("cookie");
+		}
+		this.writeToClient(JsonUtil.getJsonStrByConfigFromMap(map));
 	}
 	
 	public void enroll(){
@@ -56,7 +65,15 @@ public class AuthenticateAction extends BaseAction implements ModelDriven {
 	}
 	
 	public void loginOut(){
-		this.writeToClient(JsonUtil.getJsonStrByConfigFromMap(authenticateService.loginOut(authenticateBean)));
+		HashMap<String,Object> map = authenticateService.loginOut(authenticateBean);
+		Cookie[] cookies = getRequest().getCookies();
+		for(Cookie cookie:cookies) {
+			if(Constants.SESSIONID.equals(cookie.getName())) {
+				cookie.setMaxAge(0);//设置cookie失效
+				getResponse().addCookie(cookie);
+			}
+		}
+		this.writeToClient(JsonUtil.getJsonStrByConfigFromMap(map));
 	}
 	
 	public void setPassword(){
@@ -64,7 +81,7 @@ public class AuthenticateAction extends BaseAction implements ModelDriven {
 	}
 	
 	public void getUserInfo(){
-		HashMap<String,String> map = authenticateService.getUserInfo(SysContext.getUuid());
+		HashMap<String,String> map = authenticateService.getUserInfo();
 		HashMap<String,Object> returnMap = new HashMap<String,Object>();
 		returnMap.putAll(map);
 		this.writeToClient(JsonUtil.getJsonStrByConfigFromMap(returnMap));

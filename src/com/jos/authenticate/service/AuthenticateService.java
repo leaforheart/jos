@@ -12,5 +12,5 @@ public interface AuthenticateService extends IBaseService {
 	HashMap<String,Object> phoneCode(AuthenticateBean authenticateBean);
 	HashMap<String,Object> loginOut(AuthenticateBean authenticateBean);
 	HashMap<String,Object> setPassword(AuthenticateBean authenticateBean);
-	HashMap<String,String> getUserInfo(String uuid);
+	HashMap<String,String> getUserInfo();
 }
