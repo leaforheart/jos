@@ -56,6 +56,7 @@ public class CartServiceImpl extends AbstractBaseService implements CartService 
 				String amounted = carted.getItemAmount();
 				String amounting = cart.getItemAmount();
 				carted.setItemAmount(String.valueOf(Integer.parseInt(amounted)+Integer.parseInt(amounting)));
+				carted.setLastUpdateTime(new Date());
 				cartDao.update(carted);
 			}
 			
