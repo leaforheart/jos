@@ -12,6 +12,7 @@ import redis.clients.jedis.Jedis;
 
 import com.inveno.util.CollectionUtils;
 import com.inveno.util.MD5Utils;
+import com.inveno.util.PropertyUtils;
 import com.inveno.util.StringUtil;
 import com.jos.authenticate.dao.AuthenticateDao;
 import com.jos.authenticate.model.EmsMtTask;
@@ -81,9 +82,12 @@ public class AuthenticateServiceImpl extends AbstractBaseService implements Auth
 			jedis.expire(uuid, 60*60*2);
 			
 			Cookie cookie = new Cookie(Constants.SESSIONID,uuid);
-			cookie.setMaxAge(30*60);
+			cookie.setMaxAge(Integer.parseInt(PropertyUtils.getProperty(Constants.COOKIE_TIME)));//存活30分钟
+			String domain = PropertyUtils.getProperty(Constants.COOKIE_DOMAIN);
+			if(!StringUtil.isEmpty(domain)) {
+				cookie.setDomain(domain);
+			}
 			cookie.setPath("/");
-			
 			map.put("cookie",cookie);
 			map.put(Constants.RETURN_CODE, Constants.SUCCESS_CODE);
 		} catch (Exception e) {
@@ -110,7 +114,16 @@ public class AuthenticateServiceImpl extends AbstractBaseService implements Auth
 				map.put(Constants.RETURN_CODE,"-1");//验证码错误
 				return map;
 			}
-			
+			List<String> parameters = new ArrayList<String>();
+			parameters.add(primPrin);
+			parameters.add(primPrin);
+			parameters.add(primPrin);
+			parameters.add(primPrin);
+			List<User> list = authenticateDao.findByHql("from User where prim_prin=? or principal1=? or principal2=? or principal3=?", parameters);
+			if(list.size()>0) {
+				map.put(Constants.RETURN_CODE,"-2");//用户已存在
+				return map;
+			}
 			User user = new User();
 			user.setPrimPrin(primPrin);
 			user.setCredential(MD5Utils.getResult(credential));
@@ -150,6 +163,7 @@ public class AuthenticateServiceImpl extends AbstractBaseService implements Auth
 			String newCredential = authenticateBean.getNewCredential();
 			user.setCredential(newCredential);
 			user.setLastUpdateTime(new Date());
+			jedis.hset(SysContext.getUuid(), "credential", newCredential);
 			map.put(Constants.RETURN_CODE, Constants.SUCCESS_CODE);
 		} catch (Exception e) {
 			map.clear();
@@ -170,7 +184,10 @@ public class AuthenticateServiceImpl extends AbstractBaseService implements Auth
 			String primPrin = authenticateBean.getUser().getPrimPrin();
 			List<String> parameters = new ArrayList<String>();
 			parameters.add(primPrin);
-			List<User> list = authenticateDao.findByHql("from User where primPrin=?", parameters);
+			parameters.add(primPrin);
+			parameters.add(primPrin);
+			parameters.add(primPrin);
+			List<User> list = authenticateDao.findByHql("from User where primPrin=? or principal1=? or principal2=? or principal3=? ", parameters);
 			String phoneCodeUse = authenticateBean.getPhoneCodeUse();
 			if("1".equals(phoneCodeUse)) {
 				if(list.size()>0) {
@@ -243,10 +260,6 @@ public class AuthenticateServiceImpl extends AbstractBaseService implements Auth
 		try {
 			String uuid = SysContext.getUuid();
 			jedis.hdel(uuid);
-			Cookie cookie = new Cookie(Constants.SESSIONID,uuid);
-			cookie.setMaxAge(0);
-			map.put(Constants.RETURN_CODE, Constants.SUCCESS_CODE);
-			map.put("cookie", cookie);
 			map.put(Constants.RETURN_CODE, Constants.SUCCESS_CODE);
 		} catch (Exception e) {
 			map.clear();
@@ -274,7 +287,10 @@ public class AuthenticateServiceImpl extends AbstractBaseService implements Auth
 			String newCredential = authenticateBean.getNewCredential();
 			List<String> parameters = new ArrayList<String>();
 			parameters.add(primPrin);
-			List<User> list = authenticateDao.findByHql("from User where primPrin=?", parameters);
+			parameters.add(primPrin);
+			parameters.add(primPrin);
+			parameters.add(primPrin);
+			List<User> list = authenticateDao.findByHql("from User where primPrin=? or principal1=? or principal2=? or principal3=?", parameters);
 			if(list==null||list.size()!=1) {
 				map.put(Constants.RETURN_CODE, "-2");
 				return map;
@@ -295,7 +311,7 @@ public class AuthenticateServiceImpl extends AbstractBaseService implements Auth
 	}
 	
 	@Override
-	public HashMap<String,String> getUserInfo(String uuid) {
+	public HashMap<String,String> getUserInfo() {
 		HashMap<String,String> map = (HashMap<String, String>) SysContext.getUserMap();
 		String userId = map.get("userId");
 		if(StringUtil.isEmpty(userId)) {
