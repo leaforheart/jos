@@ -115,6 +115,10 @@ public class AuthenticateServiceImpl extends AbstractBaseService implements Auth
 				return map;
 			}
 			List<String> parameters = new ArrayList<String>();
+			parameters.add(primPrin);
+			parameters.add(primPrin);
+			parameters.add(primPrin);
+			parameters.add(primPrin);
 			List<User> list = authenticateDao.findByHql("from User where prim_prin=? or principal1=? or principal2=? or principal3=?", parameters);
 			if(list.size()>0) {
 				map.put(Constants.RETURN_CODE,"-2");//用户已存在
@@ -179,6 +183,9 @@ public class AuthenticateServiceImpl extends AbstractBaseService implements Auth
 		try {
 			String primPrin = authenticateBean.getUser().getPrimPrin();
 			List<String> parameters = new ArrayList<String>();
+			parameters.add(primPrin);
+			parameters.add(primPrin);
+			parameters.add(primPrin);
 			parameters.add(primPrin);
 			List<User> list = authenticateDao.findByHql("from User where primPrin=? or principal1=? or principal2=? or principal3=? ", parameters);
 			String phoneCodeUse = authenticateBean.getPhoneCodeUse();
@@ -279,6 +286,9 @@ public class AuthenticateServiceImpl extends AbstractBaseService implements Auth
 			}
 			String newCredential = authenticateBean.getNewCredential();
 			List<String> parameters = new ArrayList<String>();
+			parameters.add(primPrin);
+			parameters.add(primPrin);
+			parameters.add(primPrin);
 			parameters.add(primPrin);
 			List<User> list = authenticateDao.findByHql("from User where primPrin=? or principal1=? or principal2=? or principal3=?", parameters);
 			if(list==null||list.size()!=1) {
