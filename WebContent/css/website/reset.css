@@ -41,7 +41,7 @@ a:hover{text-decoration: underline;}
     color: #ccc;
 }
 .icon{
-    background: url("../img/bg.png") no-repeat;
+    background: url("../../img/bg.png") no-repeat;
     display: inline-block;
 }
 .search{
@@ -153,7 +153,7 @@ a:hover{text-decoration: underline;}
     background-position: 0 -145px;
 }
 .app{
-    background: url("../img/app.png") no-repeat;
+    background: url("../../img/app.png") no-repeat;
     display: inline-block;
 }
 .weibo{
@@ -210,7 +210,7 @@ a:hover{text-decoration: underline;}
 .ef-slide .ef-slidebtn .arr{
     position: absolute;
     top: 50%;
-    background: url("../img/bg.png") no-repeat;
+    background: url("../../img/bg.png") no-repeat;
 }
 .ef-slide .ef-slidebtn.pre .arr{
     left: 50%;
@@ -249,7 +249,7 @@ a:hover{text-decoration: underline;}
 .ef-selectBox .ef-selectHead .ef-selectIcon{
     width: 19px;
     height: 19px;
-    background:url("../img/bg.png") no-repeat -75px 0;
+    background:url("../../img/bg.png") no-repeat -75px 0;
     float: left;
     margin-left: -19px;
 }

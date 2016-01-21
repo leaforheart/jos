@@ -1,3 +1,100 @@
+var authenticateBean = {};
+/*加载公共页面*/
+$(".include-page").each(function () {
+    var _self = $(this);
+    var url = _self.attr("data-src");
+    var index = _self.length;
+    $.ajax({
+        url:url,
+        success: function (data) {
+            _self.get(0).outerHTML = data;
+        }
+    });
+});
+$(function () {
+    var $dialog = $(".ef-dialog-box");
+    $dialog.on("click",".mobile-code", function () {
+        authenticateBean.phoneCodeUse  = 1;
+        $.ajax({
+            url:"/jos/authenticate/phoneCode.action",
+            type:"post",
+            data:authenticateBean,
+            dataType:"json",
+            success: function (data) {
+                console.log(data);
+            }
+        });
+});
+    $(document).on("click","#login-button", function () {
+        $(".ef-dialog").hide();
+        $("#login-dialog").show();
+    });
+    $(document).on("click","#register-button", function () {
+        $(".ef-dialog").hide();
+        $("#register-dialog").show();
+    });
+    /*页面顶部*/
+    $(document).on("hover",".navi-top", function (e) {
+        var obj = {},$box = $(this).find(".navi-box");
+        if($(this).hasClass("cur")){
+            obj.bottom = "100%";
+            $(this).removeClass("cur");
+        }else{
+            obj.bottom = "0%";
+            $(this).addClass("cur");
+        }
+        $box.stop().animate(obj,"fast");
+    });
+    var scrollTop = 0;
+    $(window).on("scroll", function (e) {
+        var scroll = $(window).scrollTop();
+        var obj = {};
+        //滚轮向上滑
+        if(scroll > scrollTop){
+            obj.bottom = "0%";
+        //滚轮向下滑
+        }else{
+            obj.bottom = "100%";
+        }
+        $(".navi-top .navi-box").stop().animate(obj,"fast", function () {
+            scrollTop = scroll;
+        });
+    });
+    /*页面搜索框*/
+    $(".search-box .search").on("click", function (e) {
+        e.stopPropagation();
+        var obj={},$parent = $(this).parent().parent();
+        if($parent.hasClass("cur")){
+            obj.width = "20px";
+            $parent.removeClass("cur");
+        }else{
+            obj.width = "197px";
+            $parent.addClass("cur");
+        }
+        $parent.stop().animate(obj,"fast");
+    });
+    /*input框*/
+    $(document).on("focus",".placeholder",function () {
+        var _self = $(this).get(0);
+        if(_self.value == _self.defaultValue){
+            _self.value = "";
+            $(this).removeClass("cur");
+        }
+    }).on("blur", function () {
+        var _self = $(this).get(0);
+        if($.trim(_self.value) == ""){
+            _self.value = _self.defaultValue;
+            $(this).addClass("cur");
+        }
+    });
+    /*checkbox*/
+    $(document).on("click",".checkbox,.checkbox2", function (e) {
+        e.stopPropagation();
+        $(this).toggleClass("cur");
+    });
+});
+
+
 /*轮播*/
 function Slide(obj){
     var config = {
@@ -468,65 +565,6 @@ Select.prototype = {
         this.bind();
     }
 };
-$(function () {
-    /*页面顶部*/
-    $(".navi-top").on("hover", function (e) {
-        var obj = {},$box = $(this).find(".navi-box");
-        if($(this).hasClass("cur")){
-            obj.bottom = "100%";
-            $(this).removeClass("cur");
-        }else{
-            obj.bottom = "0%";
-            $(this).addClass("cur");
-        }
-        $box.stop().animate(obj,"fast");
-    });
-    var scrollTop = 0;
-    $(window).on("scroll", function (e) {
-        var scroll = $(window).scrollTop();
-        var obj = {};
-        //滚轮向上滑
-        if(scroll > scrollTop){
-            obj.bottom = "0%";
-        //滚轮向下滑
-        }else{
-            obj.bottom = "100%";
-        }
-        $(".navi-top .navi-box").stop().animate(obj,"fast", function () {
-            scrollTop = scroll;
-        });
-    });
-    /*页面顶部搜索框*/
-    $(".search-box .search").on("click", function (e) {
-        e.stopPropagation();
-        var obj={},$parent = $(this).parent().parent();
-        if($parent.hasClass("cur")){
-            obj.width = "20px";
-            $parent.removeClass("cur");
-        }else{
-            obj.width = "197px";
-            $parent.addClass("cur");
-        }
-        $parent.stop().animate(obj,"fast");
-    });
-    $(".placeholder").on("focus",function () {
-        var _self = $(this).get(0);
-        if(_self.value == _self.defaultValue){
-            _self.value = "";
-            $(this).removeClass("cur");
-        }
-    }).on("blur", function () {
-        var _self = $(this).get(0);
-        if($.trim(_self.value) == ""){
-            _self.value = _self.defaultValue;
-            $(this).addClass("cur");
-        }
-    });
-    $(document).on("click",".checkbox,.checkbox2", function (e) {
-        e.stopPropagation();
-        $(this).toggleClass("cur");
-    });
-});
 
 
 
