@@ -43,6 +43,7 @@ public class AddressServiceImpl extends AbstractBaseService implements AddressSe
 		address.setUserId(userId);
 		address.setCreateTime(new Date());
 		address.setLastUpdateTime(new Date());
+		addressDao.save(address);
 		map.put(Constants.RETURN_CODE, Constants.SUCCESS_CODE);
 		return map;
 	}
@@ -86,6 +87,7 @@ public class AddressServiceImpl extends AbstractBaseService implements AddressSe
 			addressDB.setAddress(address.getAddress());
 			addressDB.setTelphone(address.getTelphone());
 			addressDB.setLastUpdateTime(new Date());
+			addressDao.update(addressDB);
 			map.put(Constants.RETURN_CODE, Constants.SUCCESS_CODE);
 		} catch (Exception e) {
 			map.clear();
