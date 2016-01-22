@@ -15,8 +15,6 @@
 		</action>
 		<action name="clear" class="com.jos.cart.action.CartAction" method="clear">
 		</action>
-		<action name="remove" class="com.jos.cart.action.CartAction" method="remove">
-		</action>
 	</package>
 	
 </struts>

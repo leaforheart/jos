@@ -30,19 +30,19 @@ public class Dictionary extends BaseModel {
 	private String id;
 	
 	@Column(name = "parent_id")
-	private String parent_id;
+	private String parentId;
 	
 	@Column(name = "type_code")
-	private String type_code;
+	private String typeCode;
 	
 	@Column(name = "type_name")
-	private String type_name;
+	private String typeName;
 	
 	@Column(name = "value_code")
-	private String value_code;
+	private String valueCode;
 	
 	@Column(name = "value_name")
-	private String value_name;
+	private String valueName;
 
 	@Column(name = "create_time")
 	@Temporal(TemporalType.TIMESTAMP)
@@ -60,44 +60,44 @@ public class Dictionary extends BaseModel {
 		this.id = id;
 	}
 
-	public String getParent_id() {
-		return parent_id;
+	public String getParentId() {
+		return parentId;
 	}
 
-	public void setParent_id(String parent_id) {
-		this.parent_id = parent_id;
+	public void setParentId(String parent_id) {
+		this.parentId = parent_id;
 	}
 
-	public String getType_code() {
-		return type_code;
+	public String getTypeCode() {
+		return typeCode;
 	}
 
-	public void setType_code(String type_code) {
-		this.type_code = type_code;
+	public void setTypeCode(String type_code) {
+		this.typeCode = type_code;
 	}
 
-	public String getType_name() {
-		return type_name;
+	public String getTypeName() {
+		return typeName;
 	}
 
-	public void setType_name(String type_name) {
-		this.type_name = type_name;
+	public void setTypeName(String type_name) {
+		this.typeName = type_name;
 	}
 
-	public String getValue_code() {
-		return value_code;
+	public String getValueCode() {
+		return valueCode;
 	}
 
-	public void setValue_code(String value_code) {
-		this.value_code = value_code;
+	public void setValueCode(String value_code) {
+		this.valueCode = value_code;
 	}
 
-	public String getValue_name() {
-		return value_name;
+	public String getValueName() {
+		return valueName;
 	}
 
-	public void setValue_name(String value_name) {
-		this.value_name = value_name;
+	public void setValueName(String value_name) {
+		this.valueName = value_name;
 	}
 
 	public Date getCreateTime() {
