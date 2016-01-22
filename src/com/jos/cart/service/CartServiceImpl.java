@@ -37,7 +37,29 @@ public class CartServiceImpl extends AbstractBaseService implements CartService 
 			cart.setUserId(userId);
 			cart.setCreateTime(new Date());
 			cart.setLastUpdateTime(new Date());
-			cartDao.save(cart);
+			String itemId = cart.getItemId();
+			String properties = cart.getItemProperties();
+			Set<String> set = this.getPropertiesSet(properties);
+			List<String> parameters = new ArrayList<String>();
+			parameters.add(itemId);
+			List<Cart> list = cartDao.findByHql("from Cart where itemId=?", parameters);
+			Cart carted = null;
+			for(Cart c:list) {
+				Set<String> seted = this.getPropertiesSet(c.getItemProperties());
+				if(seted.containsAll(set)) {
+					carted = c;
+				}
+			}
+			if(carted==null) {
+				cartDao.save(cart);
+			} else {
+				String amounted = carted.getItemAmount();
+				String amounting = cart.getItemAmount();
+				carted.setItemAmount(String.valueOf(Integer.parseInt(amounted)+Integer.parseInt(amounting)));
+				carted.setLastUpdateTime(new Date());
+				cartDao.update(carted);
+			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			map.put(Constants.RETURN_CODE, Constants.SEVER_ERROR);
@@ -45,6 +67,15 @@ public class CartServiceImpl extends AbstractBaseService implements CartService 
 		}
 		map.put(Constants.RETURN_CODE, Constants.SUCCESS_CODE);
 		return map;
+	}
+	
+	private Set<String> getPropertiesSet(String properties) {
+		Set<String> set = new HashSet<String>();
+		String[] pro = properties.split(";");
+		for(int i=0;i<pro.length;i++) {
+			set.add(pro[i]);
+		}
+		return set;
 	}
 
 	@Override

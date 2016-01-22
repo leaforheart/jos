@@ -58,7 +58,4 @@ public class CartAction extends BaseAction implements ModelDriven {
 	public void clear(){
 		this.writeToClient(JsonUtil.getJsonStrByConfigFromMap(cartService.clear()));
 	}
-	public void remove() {
-		this.writeToClient(JsonUtil.getJsonStrByConfigFromMap(cartService.remove(cartBean.getIds())));
-	}
 }

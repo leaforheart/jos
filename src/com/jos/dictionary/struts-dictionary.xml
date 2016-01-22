@@ -6,7 +6,23 @@
 
 	<package name="jos-dictionary" extends="jos-default" namespace="/dictionary">
 	
-		<action name="add" class="com.jos.dictionary.action.DictionaryAction" method="add">
+		<action name="addValue" class="com.jos.dictionary.action.DictionaryAction" method="addValue">
+		</action>
+		<action name="addType" class="com.jos.dictionary.action.DictionaryAction" method="addType">
+		</action>
+		<action name="delValue" class="com.jos.dictionary.action.DictionaryAction" method="delValue">
+		</action>
+		<action name="delType" class="com.jos.dictionary.action.DictionaryAction" method="delType">
+		</action>
+		<action name="updValue" class="com.jos.dictionary.action.DictionaryAction" method="updValue">
+		</action>
+		<action name="updType" class="com.jos.dictionary.action.DictionaryAction" method="updType">
+		</action>
+		<action name="queValue" class="com.jos.dictionary.action.DictionaryAction" method="queValue">
+		</action>
+		<action name="queType" class="com.jos.dictionary.action.DictionaryAction" method="queType">
+		</action>
+		<action name="queList" class="com.jos.dictionary.action.DictionaryAction" method="queList">
 		</action>
 		
 	</package>

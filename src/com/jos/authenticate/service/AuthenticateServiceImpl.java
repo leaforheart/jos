@@ -91,6 +91,7 @@ public class AuthenticateServiceImpl extends AbstractBaseService implements Auth
 			map.put("cookie",cookie);
 			map.put(Constants.RETURN_CODE, Constants.SUCCESS_CODE);
 		} catch (Exception e) {
+			e.printStackTrace();
 			map.clear();
 			map.put(Constants.RETURN_CODE,Constants.SEVER_ERROR);
 		} finally {
@@ -189,12 +190,12 @@ public class AuthenticateServiceImpl extends AbstractBaseService implements Auth
 			parameters.add(primPrin);
 			List<User> list = authenticateDao.findByHql("from User where primPrin=? or principal1=? or principal2=? or principal3=? ", parameters);
 			String phoneCodeUse = authenticateBean.getPhoneCodeUse();
-			if("1".equals(phoneCodeUse)) {
+			if(Constants.USECODE_REGISTER.equals(phoneCodeUse)) {
 				if(list.size()>0) {
 					map.put(Constants.RETURN_CODE, "-1");
 					return map;
 				}
-			}else if("2".equals(phoneCodeUse)) {
+			}else if(Constants.USECODE_GETBACK.equals(phoneCodeUse)) {
 				if(list==null||list.size()!=1) {
 					map.put(Constants.RETURN_CODE, "-2");
 					return map;

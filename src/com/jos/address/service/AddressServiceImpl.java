@@ -52,9 +52,16 @@ public class AddressServiceImpl extends AbstractBaseService implements AddressSe
 		HashMap<String,Object> map = new HashMap<String,Object>();
 		try {
 			String id = addressBean.getAddress().getId();
-			List<String> parameters = new ArrayList<String>();
-			parameters.add(id);
-			addressDao.excuteHql("delete from Address where id=?", parameters);
+			Address address = addressDao.findById(id, Address.class);
+			if(address==null) {
+				map.put(Constants.RETURN_CODE, "-1");
+				return map;
+			}
+			if("0".equals(address.getIsDefault())) {
+				map.put(Constants.RETURN_CODE, "-2");
+				return map;
+			}
+			addressDao.delete(address);
 			map.put(Constants.RETURN_CODE, Constants.SUCCESS_CODE);
 		} catch (Exception e) {
 			map.clear();
@@ -71,6 +78,10 @@ public class AddressServiceImpl extends AbstractBaseService implements AddressSe
 			Address address = addressBean.getAddress();
 			String id = address.getId();
 			Address addressDB = addressDao.findById(id,Address.class);
+			if(addressDB==null) {
+				map.put(Constants.RETURN_CODE, "-1");
+				return map;
+			}
 			addressDB.setName(address.getName());
 			addressDB.setAddress(address.getAddress());
 			addressDB.setTelphone(address.getTelphone());
@@ -115,6 +126,10 @@ public class AddressServiceImpl extends AbstractBaseService implements AddressSe
 			String userId = SysContext.getUser().getId();
 			if(StringUtil.isEmpty(userId)) {
 				map.put(Constants.RETURN_CODE, "-1");
+				return map;
+			}
+			if(addressDB==null) {
+				map.put(Constants.RETURN_CODE, "-2");
 				return map;
 			}
 			List<String> parameters = new ArrayList<String>();
