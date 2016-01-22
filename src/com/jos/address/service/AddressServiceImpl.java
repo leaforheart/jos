@@ -39,6 +39,8 @@ public class AddressServiceImpl extends AbstractBaseService implements AddressSe
 		List<Address> list = addressDao.findByHql("from Address where userId=?", parameters);
 		if(list==null||list.size()==0) {
 			address.setIsDefault("0");
+		}else {
+			address.setIsDefault("1");
 		}
 		address.setUserId(userId);
 		address.setCreateTime(new Date());
