@@ -20,6 +20,7 @@ import com.jos.authenticate.model.User;
 import com.jos.authenticate.vo.AuthenticateBean;
 import com.jos.common.baseclass.AbstractBaseService;
 import com.jos.common.util.Constants;
+import com.jos.common.util.PropertiesUtil;
 import com.jos.common.util.SysContext;
 import com.jos.redis.RedisClient;
 
@@ -88,8 +89,9 @@ public class AuthenticateServiceImpl extends AbstractBaseService implements Auth
 			jedis.expire(uuid, 60*60*2);
 			
 			Cookie cookie = new Cookie(Constants.SESSIONID,uuid);
-			cookie.setMaxAge(Integer.parseInt(PropertyUtils.getProperty(Constants.COOKIE_TIME)));//存活30分钟
-			String domain = PropertyUtils.getProperty(Constants.COOKIE_DOMAIN);
+			String path = "jos.properties";
+			cookie.setMaxAge(Integer.parseInt(PropertiesUtil.getProperty(path, Constants.COOKIE_TIME)));//存活30分钟
+			String domain = PropertiesUtil.getProperty(path, Constants.COOKIE_DOMAIN);
 			if(!StringUtil.isEmpty(domain)) {
 				cookie.setDomain(domain);
 			}
