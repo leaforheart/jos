@@ -1,4 +1,3 @@
-var authenticateBean = {};
 /*加载公共页面*/
 $(".include-page").each(function () {
     var _self = $(this);
@@ -12,19 +11,78 @@ $(".include-page").each(function () {
     });
 });
 $(function () {
+    /*显示错误信息*/
+    function showMessage(dom,msg){
+        dom.html(msg);
+    }
+    /*禁用发送验证码按钮*/
+    function disableBtn(dom){
+        $(dom).attr("disabled",true);
+        setTimeout(function () {
+            $(dom).attr("disabled",false);
+        },60000);
+    }
+    function msgSwitch(code){
+        switch (code){
+            case 0:showMessage($err,"");break;
+            case -1:showMessage($err,"您的号码已被注册！");break;
+            case -2:showMessage($err,"您的号码不存在！");break;
+            case -3:showMessage($err,"验证码获取失败！");break;
+            case -6:showMessage($err,"服务器异常，请联系工作人员！");break;
+        }
+    }
     var $dialog = $(".ef-dialog-box");
+    /*注册 发送验证码*/
     $dialog.on("click",".mobile-code", function () {
-        authenticateBean.phoneCodeUse  = 1;
+        var $register = $("#register-dialog"),
+            _self = this,
+             $err = $register.find(".err"),
+             mobile = $register.find("[name='mobile']").val();
+        var param = {
+            "authenticateBean.user.primPrin":mobile,
+            "authenticateBean.phoneCodeUse":1
+        };
         $.ajax({
             url:"/jos/authenticate/phoneCode.action",
             type:"post",
-            data:authenticateBean,
+            data:param,
+            dataType:"json",
+            success: function (data) {
+                msgSwitch(data.rCode);
+                disableBtn(_self);
+            }
+        });
+});
+    /*提交注册按钮*/
+    $(".ef-dialog-box").on("click","#register-dialog .login-btn" ,function () {
+        var $dialog = $("#register-dialog"),
+            mobile = $dialog.find("[name='mobile']").val(),
+            password = $dialog.find("[name='password']").val(),
+            confirmPassword = $dialog.find("[name='confirm-password']").val(),
+            mobileCode = $dialog.find("[name='mobile-code']").val(),
+            $checkbox = $dialog.find(".checkbox"),
+            $err = $dialog.find(".err");
+        if(!$checkbox.hasClass("cur")){
+            showMessage($err,"请先同意用户服务协议");
+            return;
+        }
+        var param = {
+            "authenticateBean.user.primPrin":mobile,
+            "authenticateBean.user.credential":password,
+            "authenticateBean.phoneCode":mobileCode
+        };
+        $.ajax({
+            url:"/jos/authenticate/enroll.action",
+            type:"post",
+            data:param,
             dataType:"json",
             success: function (data) {
                 console.log(data);
             }
         });
-});
+
+    });
+
     $(document).on("click","#login-button", function () {
         $(".ef-dialog").hide();
         $("#login-dialog").show();
