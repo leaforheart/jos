@@ -75,9 +75,15 @@ public class AuthenticateServiceImpl extends AbstractBaseService implements Auth
 			String uuid = UUID.randomUUID().toString();
 			jedis.hset(uuid, "userId", dbUser.getId());
 			jedis.hset(uuid, "primPrin", dbUser.getPrimPrin());
-			jedis.hset(uuid, "principal1", dbUser.getPrincipal1());
-			jedis.hset(uuid, "principal2", dbUser.getPrincipal2());
-			jedis.hset(uuid, "principal3", dbUser.getPrincipal3());
+			if(StringUtil.isNotEmpty(dbUser.getPrincipal1())) {
+				jedis.hset(uuid, "principal1", dbUser.getPrincipal1());
+			}
+			if(StringUtil.isNotEmpty(dbUser.getPrincipal2())) {
+				jedis.hset(uuid, "principal2", dbUser.getPrincipal2());
+			}
+			if(StringUtil.isNotEmpty(dbUser.getPrincipal3())) {
+				jedis.hset(uuid, "principal3", dbUser.getPrincipal3());
+			}
 			jedis.hset(uuid, "credential", encodeCredential);
 			jedis.expire(uuid, 60*60*2);
 			
