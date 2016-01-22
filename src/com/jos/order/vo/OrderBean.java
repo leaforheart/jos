@@ -9,7 +9,14 @@ public class OrderBean {
 	private Order order;
 	private List<OrderItem> orderItemList;
 	private String orderItem;
+	private String json;
 	
+	public String getJson() {
+		return json;
+	}
+	public void setJson(String json) {
+		this.json = json;
+	}
 	public String getOrderItem() {
 		return orderItem;
 	}
@@ -23,9 +30,11 @@ public class OrderBean {
 		this.order = order;
 	}
 	public List<OrderItem> getOrderItemList() {
+		orderItemList = jsonToList(json);
 		return orderItemList;
 	}
-	public void setOrderItemList(List<OrderItem> orderItemList) {
-		this.orderItemList = orderItemList;
+	
+	private List<OrderItem> jsonToList(String json) {
+		return null;
 	}
 }

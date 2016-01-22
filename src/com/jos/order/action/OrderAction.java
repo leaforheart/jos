@@ -1,5 +1,6 @@
 package com.jos.order.action;
 
+import com.inveno.util.JsonUtil;
 import com.jos.common.baseclass.BaseAction;
 import com.jos.order.service.OrderService;
 import com.jos.order.vo.OrderBean;
@@ -35,6 +36,38 @@ public class OrderAction  extends BaseAction implements ModelDriven {
 			orderBean = new OrderBean();
 		}
 		return orderBean;
+	}
+	
+	public void submiteOrder() {
+		this.writeToClient(JsonUtil.getJsonStrByConfigFromMap(orderService.submiteOrder(orderBean)));
+	}
+	
+	public void payOrder() {
+		this.writeToClient(JsonUtil.getJsonStrByConfigFromMap(orderService.payOrder(orderBean)));
+	}
+	
+	public void deliverOrder() {
+		this.writeToClient(JsonUtil.getJsonStrByConfigFromMap(orderService.deliverOrder(orderBean)));
+	}
+	
+	public void completeOrder() {
+		this.writeToClient(JsonUtil.getJsonStrByConfigFromMap(orderService.completeOrder(orderBean)));
+	}
+	
+	public void cancelOrder() {
+		this.writeToClient(JsonUtil.getJsonStrByConfigFromMap(orderService.cancelOrder(orderBean)));
+	}
+	
+	public void getOrderDetail() {
+		this.writeToClient(JsonUtil.getJsonStrByConfigFromMap(orderService.getOrderDetail(orderBean)));
+	}
+	
+	public void getOrderListForUser() {
+		this.writeToClient(JsonUtil.getJsonStrByConfigFromMap(orderService.getOrderListForUser(orderBean)));
+	}
+	
+	public void getOrderList() {
+		this.writeToClient(JsonUtil.getJsonStrByConfigFromMap(orderService.getOrderList(orderBean)));
 	}
 
 }
