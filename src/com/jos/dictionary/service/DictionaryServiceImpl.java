@@ -32,12 +32,12 @@ public class DictionaryServiceImpl extends AbstractBaseService implements Dictio
 		HashMap<String,Object> map = new HashMap<String,Object>();
 		try {
 			Dictionary dictionary = dictionaryBean.getDictionary();
-			String valueCode = dictionary.getValue_code();
-			String typeCode = dictionary.getType_code();
+			String valueCode = dictionary.getValueCode();
+			String typeCode = dictionary.getTypeCode();
 			List<String> parameters = new ArrayList<String>();
 			parameters.add(typeCode);
 			parameters.add(valueCode);
-			List<Dictionary> list = dictionaryDao.findByHql("from Dictionary where type_code=? and value_code=?", parameters);
+			List<Dictionary> list = dictionaryDao.findByHql("from Dictionary where typeCode=? and valueCode=?", parameters);
 			if(list.size()>0) {
 				map.put(Constants.RETURN_CODE, "-1");//已存在
 				return map;
@@ -59,10 +59,10 @@ public class DictionaryServiceImpl extends AbstractBaseService implements Dictio
 		HashMap<String,Object> map = new HashMap<String,Object>();
 		try {
 			Dictionary dictionary = dictionaryBean.getDictionary();
-			String typeCode = dictionary.getType_code();
+			String typeCode = dictionary.getTypeCode();
 			List<String> parameters = new ArrayList<String>();
 			parameters.add(typeCode);
-			List<Dictionary> list = dictionaryDao.findByHql("from Dictionary where type_code=? and value_code is null", parameters);
+			List<Dictionary> list = dictionaryDao.findByHql("from Dictionary where typeCode=? and valueCode is null", parameters);
 			if(list.size()>0) {
 				map.put(Constants.RETURN_CODE, "-1");//已存在
 				return map;
@@ -83,12 +83,12 @@ public class DictionaryServiceImpl extends AbstractBaseService implements Dictio
 	public HashMap<String, Object> delValue(DictionaryBean dictionaryBean) {
 		HashMap<String,Object> map = new HashMap<String,Object>();
 		try {
-			String typeCode = dictionaryBean.getDictionary().getType_code();
-			String valueCode = dictionaryBean.getDictionary().getValue_code();
+			String typeCode = dictionaryBean.getDictionary().getTypeCode();
+			String valueCode = dictionaryBean.getDictionary().getValueCode();
 			List<String> parameter = new ArrayList<String>();
 			parameter.add(typeCode);
 			parameter.add(valueCode);
-			dictionaryDao.excuteHql("delete from Dictionary where type_code=? and value_code=?", parameter);
+			dictionaryDao.excuteHql("delete from Dictionary where typeCode=? and valueCode=?", parameter);
 		} catch (Exception e) {
 			e.printStackTrace();
 			map.put(Constants.RETURN_CODE, Constants.SEVER_ERROR);
@@ -102,10 +102,10 @@ public class DictionaryServiceImpl extends AbstractBaseService implements Dictio
 	public HashMap<String, Object> delType(DictionaryBean dictionaryBean) {
 		HashMap<String,Object> map = new HashMap<String,Object>();
 		try {
-			String typeCode = dictionaryBean.getDictionary().getType_code();
+			String typeCode = dictionaryBean.getDictionary().getTypeCode();
 			List<String> parameter = new ArrayList<String>();
 			parameter.add(typeCode);
-			dictionaryDao.excuteHql("delete from Dictionary where type_code=? and value_code is null", parameter);
+			dictionaryDao.excuteHql("delete from Dictionary where typeCode=?", parameter);
 		} catch (Exception e) {
 			e.printStackTrace();
 			map.put(Constants.RETURN_CODE, Constants.SEVER_ERROR);
@@ -120,17 +120,17 @@ public class DictionaryServiceImpl extends AbstractBaseService implements Dictio
 		HashMap<String,Object> map = new HashMap<String,Object>();
 		try {
 			Dictionary dictionary = dictionaryBean.getDictionary();
-			String valueCode = dictionary.getValue_code();
-			String typeCode = dictionary.getType_code();
+			String valueCode = dictionary.getValueCode();
+			String typeCode = dictionary.getTypeCode();
 			List<String> parameters = new ArrayList<String>();
 			parameters.add(typeCode);
 			parameters.add(valueCode);
-			List<Dictionary> list = dictionaryDao.findByHql("from Dictionary where type_code=? and value_code=?", parameters);
+			List<Dictionary> list = dictionaryDao.findByHql("from Dictionary where typeCode=? and valueCode=?", parameters);
 			if(list.size()==0) {
 				map.put(Constants.RETURN_CODE, "-1");//不存在
 				return map;
 			}
-			list.get(0).setValue_name(dictionary.getValue_name());
+			list.get(0).setValueName(dictionary.getValueName());
 			list.get(0).setLastUpdateTime(new Date());
 			dictionaryDao.update(list.get(0));
 		} catch (Exception e) {
@@ -147,17 +147,17 @@ public class DictionaryServiceImpl extends AbstractBaseService implements Dictio
 		HashMap<String,Object> map = new HashMap<String,Object>();
 		try {
 			Dictionary dictionary = dictionaryBean.getDictionary();
-			String typeCode = dictionary.getType_code();
+			String typeCode = dictionary.getTypeCode();
 			List<String> parameters = new ArrayList<String>();
 			parameters.add(typeCode);
-			List<Dictionary> list = dictionaryDao.findByHql("from Dictionary where type_code=? and value_code is null", parameters);
+			List<Dictionary> list = dictionaryDao.findByHql("from Dictionary where typeCode=? and valueCode is null", parameters);
 			if(list.size()==0) {
 				map.put(Constants.RETURN_CODE, "-1");//不存在
 				return map;
 			}
-			List<Dictionary> list1 = dictionaryDao.findByHql("from Dictionary where type_code=?", parameters);
+			List<Dictionary> list1 = dictionaryDao.findByHql("from Dictionary where typeCode=?", parameters);
 			for(Dictionary dic:list1) {
-				dic.setType_name(dictionary.getType_name());
+				dic.setTypeName(dictionary.getTypeName());
 				dic.setLastUpdateTime(new Date());
 				dictionaryDao.update(dic);
 			}
@@ -175,8 +175,8 @@ public class DictionaryServiceImpl extends AbstractBaseService implements Dictio
 		HashMap<String,Object> map = new HashMap<String,Object>();
 		try {
 			List<String> parameters = new ArrayList<String>();
-			parameters.add(dictionaryBean.getDictionary().getType_code());
-			List<Object> list = dictionaryDao.findByHql("from Dictionary where type_code=? and parent_id is not null", parameters);
+			parameters.add(dictionaryBean.getDictionary().getTypeCode());
+			List<Object> list = dictionaryDao.findByHql("from Dictionary where typeCode=? and parentId is not null", parameters);
 			map.put(Constants.RETURN_DATA,JsonUtil.getJsonStrFromList(list));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -191,7 +191,7 @@ public class DictionaryServiceImpl extends AbstractBaseService implements Dictio
 	public HashMap<String, Object> queType(DictionaryBean dictionaryBean) {
 		HashMap<String,Object> map = new HashMap<String,Object>();
 		try {
-			List<Object> list = dictionaryDao.findByHql("from Dictionary where parent_id is null", null);
+			List<Object> list = dictionaryDao.findByHql("from Dictionary where parentId is null", null);
 			map.put(Constants.RETURN_DATA,JsonUtil.getJsonStrFromList(list));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -208,21 +208,21 @@ public class DictionaryServiceImpl extends AbstractBaseService implements Dictio
 		try {
 			String hql = "from Dictionary where 1=1";
 			List<String> parameters = new ArrayList<String>();
-			if(StringUtil.isNotEmpty(dictionaryBean.getDictionary().getType_name())) {
-				hql += "and type_name like ?";
-				parameters.add("%"+dictionaryBean.getDictionary().getType_name()+"%");
+			if(StringUtil.isNotEmpty(dictionaryBean.getDictionary().getTypeName())) {
+				hql += "and typeName like ?";
+				parameters.add("%"+dictionaryBean.getDictionary().getTypeName()+"%");
 			}
-			if(StringUtil.isNotEmpty(dictionaryBean.getDictionary().getType_code())) {
-				hql += "and type_code = ?";
-				parameters.add(dictionaryBean.getDictionary().getType_code());			
+			if(StringUtil.isNotEmpty(dictionaryBean.getDictionary().getTypeCode())) {
+				hql += "and typeCode = ?";
+				parameters.add(dictionaryBean.getDictionary().getTypeCode());			
 			}
-			if(StringUtil.isNotEmpty(dictionaryBean.getDictionary().getValue_name())) {
-				hql += "and value_name like ?";
-				parameters.add("%"+dictionaryBean.getDictionary().getValue_name()+"%");
+			if(StringUtil.isNotEmpty(dictionaryBean.getDictionary().getValueName())) {
+				hql += "and valueName like ?";
+				parameters.add("%"+dictionaryBean.getDictionary().getValueName()+"%");
 			}
-			if(StringUtil.isNotEmpty(dictionaryBean.getDictionary().getValue_code())) {
-				hql += "and value_code = ?";
-				parameters.add(dictionaryBean.getDictionary().getValue_code());
+			if(StringUtil.isNotEmpty(dictionaryBean.getDictionary().getValueCode())) {
+				hql += "and valueCode = ?";
+				parameters.add(dictionaryBean.getDictionary().getValueCode());
 			}
 			List<Object> list = dictionaryDao.findByHql(hql, parameters);
 			map.put(Constants.RETURN_DATA,JsonUtil.getJsonStrFromList(list));
