@@ -6,7 +6,21 @@
 
 	<package name="jos-order" extends="jos-default" namespace="/order">
 	
-		<action name="add" class="com.jos.order.action.OrderAction" method="add">
+		<action name="submiteOrder" class="com.jos.order.action.OrderAction" method="submiteOrder">
+		</action>
+		<action name="payOrder" class="com.jos.order.action.OrderAction" method="payOrder">
+		</action>
+		<action name="deliverOrder" class="com.jos.order.action.OrderAction" method="deliverOrder">
+		</action>
+		<action name="completeOrder" class="com.jos.order.action.OrderAction" method="completeOrder">
+		</action>
+		<action name="cancelOrder" class="com.jos.order.action.OrderAction" method="cancelOrder">
+		</action>
+		<action name="getOrderDetail" class="com.jos.order.action.OrderAction" method="getOrderDetail">
+		</action>
+		<action name="getOrderListForUser" class="com.jos.order.action.OrderAction" method="getOrderListForUser">
+		</action>
+		<action name="getOrderList" class="com.jos.order.action.OrderAction" method="getOrderList">
 		</action>
 		
 	</package>

@@ -91,6 +91,7 @@ public class AuthenticateServiceImpl extends AbstractBaseService implements Auth
 			map.put("cookie",cookie);
 			map.put(Constants.RETURN_CODE, Constants.SUCCESS_CODE);
 		} catch (Exception e) {
+			e.printStackTrace();
 			map.clear();
 			map.put(Constants.RETURN_CODE,Constants.SEVER_ERROR);
 		} finally {
