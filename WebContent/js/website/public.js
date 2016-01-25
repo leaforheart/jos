@@ -10,6 +10,10 @@ $(".include-page").each(function () {
         }
     });
 });
+/*显示登录对话框*/
+function showLoginDialog(){
+    $("#login-dialog").show()
+}
 $(function () {
     /*显示错误信息*/
     function showMessage(dom,msg){
@@ -23,6 +27,10 @@ $(function () {
         },60000);
     }
     var $dialog = $(".ef-dialog-box");
+    $dialog.on("click","#register_now" ,function () {
+        $("#login-dialog").hide();
+        $("#register-dialog").show();
+    });
     /*登录*/
     $dialog.on("click","#login-dialog .login-btn", function () {
         var $login = $("#login-dialog"),
@@ -42,7 +50,10 @@ $(function () {
             dataType:"json",
             success: function (data) {
                 switch (data.rCode){
-                    case "0":showMessage($err,"");break;
+                    case "0":
+                        showMessage($err,"");
+                        $login.hide();
+                        break;
                     case "-1":showMessage($err,"用户不存在！");break;
                     case "-2":showMessage($err,"用户存在多个！");break;
                     case "-3":showMessage($err,"密码错误！");break;
@@ -128,7 +139,7 @@ $(function () {
     /*登录按钮*/
     $(document).on("click","#login-button", function () {
         $(".ef-dialog").hide();
-        $("#login-dialog").show();
+        showLoginDialog();
     });
     /*注册按钮*/
     $(document).on("click","#register-button", function () {
