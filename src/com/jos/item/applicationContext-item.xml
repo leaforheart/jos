@@ -10,7 +10,7 @@
 		</property>
 	</bean>
 	
-	<bean id="itemService" class="com.jos.item.service.ItemServiceImpl">
+	<bean id="itemService" class="com.jos.item.service.ItemServiceImpl" init-method="timeInit">
 		<property name="itemDao">
 			<ref bean="itemDao" />
 		</property>

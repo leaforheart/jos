@@ -6,9 +6,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import com.inveno.util.JsonUtil;
 import com.jos.address.model.Address;
 import com.jos.common.baseclass.AbstractBaseService;
 import com.jos.common.util.Constants;
+import com.jos.common.util.SysContext;
 import com.jos.order.dao.OrderDao;
 import com.jos.order.model.Order;
 import com.jos.order.model.OrderFllow;
@@ -87,6 +89,34 @@ public class OrderServiceImpl extends AbstractBaseService implements OrderServic
 		
 		return map;
 	}
+	@Override
+	public HashMap<String, Object> getExpressList() {
+		HashMap<String,Object> map = new HashMap<String,Object>();
+		try {
+			List<Object> list = orderDao.findByHql("from Express", null);
+			map.put(Constants.RETURN_DATA, JsonUtil.getJsonStrFromList(list));
+			map.put(Constants.RETURN_CODE, Constants.SUCCESS_CODE);
+		} catch (Exception e) {
+			e.printStackTrace();
+			map.put(Constants.RETURN_CODE, Constants.SEVER_ERROR);
+			return map;
+		}
+		return map;
+	}
+	@Override
+	public HashMap<String, Object> getPayList() {
+		HashMap<String,Object> map = new HashMap<String,Object>();
+		try {
+			List<Object> list = orderDao.findByHql("from Payer", null);
+			map.put(Constants.RETURN_DATA, JsonUtil.getJsonStrFromList(list));
+			map.put(Constants.RETURN_CODE, Constants.SUCCESS_CODE);
+		} catch (Exception e) {
+			e.printStackTrace();
+			map.put(Constants.RETURN_CODE, Constants.SEVER_ERROR);
+			return map;
+		}
+		return map;
+	}
 	
 	private String getZeros(String orderId) {
 		int i = 11 - orderId.length();
@@ -114,15 +144,16 @@ public class OrderServiceImpl extends AbstractBaseService implements OrderServic
 		try {
 			//添加订单物流信息
 			String id = orderBean.getOrder().getId();
-			String pre_status = orderBean.getOrder().getStatus();
+			Order order = orderDao.findById(id, Order.class);
+			String pre_status = order.getStatus();
 			if(!String.valueOf(OrderStatus.Payed.getState()).equals(pre_status)) {
 				map.put(Constants.RETURN_CODE, "-1");//非已支付状态订单，不可以标记为已发货。
 				return map;
 			}
-			Order order = orderDao.findById(id, Order.class);
 			order.setExpressCode(orderBean.getOrder().getExpressCode());
 			//标记已发货状态
 			order.setStatus(String.valueOf(OrderStatus.Delivered.getState()));
+			orderDao.update(order);
 			
 			OrderFllow of = new OrderFllow();
 			of.setOrderId(id);
@@ -148,16 +179,16 @@ public class OrderServiceImpl extends AbstractBaseService implements OrderServic
 	public HashMap<String, Object> completeOrder(OrderBean orderBean) {
 		HashMap<String,Object> map = new HashMap<String,Object>();
 		try {
+			String id = orderBean.getOrder().getId();
+			Order order = orderDao.findById(id, Order.class);
 			//标记已完成状态
-			String pre_status = orderBean.getOrder().getStatus();
+			String pre_status = order.getStatus();
 			if(!String.valueOf(OrderStatus.Payed.getState()).equals(pre_status)) {
 				map.put(Constants.RETURN_CODE, "-1");//非已发货状态订单，不可以标记为已完成。
 				return map;
 			}
-			
-			String id = orderBean.getOrder().getId();
-			Order order = orderDao.findById(id, Order.class);
 			order.setStatus(String.valueOf(OrderStatus.Completed.getState()));
+			orderDao.update(order);
 			
 			OrderFllow of = new OrderFllow();
 			of.setOrderId(id);
@@ -220,7 +251,7 @@ public class OrderServiceImpl extends AbstractBaseService implements OrderServic
 		HashMap<String,Object> map = new HashMap<String,Object>();
 		try {
 			List<String> param = new ArrayList<String>();
-			param.add(orderBean.getOrder().getUserId());
+			param.add(SysContext.getUser().getId());
 			List<Order> list = orderDao.findByHql("from Order where userId=?", param);
 			for(Order order:list) {
 				String addressId = order.getAddressId();

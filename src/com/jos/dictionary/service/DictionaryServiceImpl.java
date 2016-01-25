@@ -208,22 +208,25 @@ public class DictionaryServiceImpl extends AbstractBaseService implements Dictio
 		try {
 			String hql = "from Dictionary where 1=1";
 			List<String> parameters = new ArrayList<String>();
-			if(StringUtil.isNotEmpty(dictionaryBean.getDictionary().getTypeName())) {
-				hql += "and typeName like ?";
-				parameters.add("%"+dictionaryBean.getDictionary().getTypeName()+"%");
+			if(dictionaryBean.getDictionary()!=null) {
+				if(StringUtil.isNotEmpty(dictionaryBean.getDictionary().getTypeName())) {
+					hql += "and typeName like ?";
+					parameters.add("%"+dictionaryBean.getDictionary().getTypeName()+"%");
+				}
+				if(StringUtil.isNotEmpty(dictionaryBean.getDictionary().getTypeCode())) {
+					hql += "and typeCode = ?";
+					parameters.add(dictionaryBean.getDictionary().getTypeCode());			
+				}
+				if(StringUtil.isNotEmpty(dictionaryBean.getDictionary().getValueName())) {
+					hql += "and valueName like ?";
+					parameters.add("%"+dictionaryBean.getDictionary().getValueName()+"%");
+				}
+				if(StringUtil.isNotEmpty(dictionaryBean.getDictionary().getValueCode())) {
+					hql += "and valueCode = ?";
+					parameters.add(dictionaryBean.getDictionary().getValueCode());
+				}
 			}
-			if(StringUtil.isNotEmpty(dictionaryBean.getDictionary().getTypeCode())) {
-				hql += "and typeCode = ?";
-				parameters.add(dictionaryBean.getDictionary().getTypeCode());			
-			}
-			if(StringUtil.isNotEmpty(dictionaryBean.getDictionary().getValueName())) {
-				hql += "and valueName like ?";
-				parameters.add("%"+dictionaryBean.getDictionary().getValueName()+"%");
-			}
-			if(StringUtil.isNotEmpty(dictionaryBean.getDictionary().getValueCode())) {
-				hql += "and valueCode = ?";
-				parameters.add(dictionaryBean.getDictionary().getValueCode());
-			}
+			
 			List<Object> list = dictionaryDao.findByHql(hql, parameters);
 			map.put(Constants.RETURN_DATA,JsonUtil.getJsonStrFromList(list));
 		} catch (Exception e) {
