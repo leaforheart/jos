@@ -54,12 +54,21 @@ public class ItemAction extends BaseAction implements ModelDriven  {
 	public void itemOffline(){
 		this.writeToClient(JsonUtil.getJsonStrByConfigFromMap(itemService.itemOffline(itemBean)));
 	}
+	public void getItem(){
+		this.writeToClient(JsonUtil.getJsonStrByConfigFromMap(itemService.getItem(itemBean)));
+	}
+	public void getItemList(){
+		this.writeToClient(JsonUtil.getJsonStrByConfigFromMap(itemService.getItemList(itemBean)));
+	}
 	
 	public void addItemProperties(){
 		this.writeToClient(JsonUtil.getJsonStrByConfigFromMap(itemService.addItemProperties(itemBean)));
 	}
 	public void delItemProperties(){
 		this.writeToClient(JsonUtil.getJsonStrByConfigFromMap(itemService.delItemProperties(itemBean)));
+	}
+	public void queItemProperties(){
+		this.writeToClient(JsonUtil.getJsonStrByConfigFromMap(itemService.queItemProperties(itemBean)));
 	}
 	
 	public void addItemDetail(){
@@ -71,6 +80,15 @@ public class ItemAction extends BaseAction implements ModelDriven  {
 	public void delItemDetail(){
 		this.writeToClient(JsonUtil.getJsonStrByConfigFromMap(itemService.delItemDetail(itemBean)));
 	}
+	public void getItemDetail(){
+		this.writeToClient(JsonUtil.getJsonStrByConfigFromMap(itemService.getItemDetail(itemBean)));
+	}
+	public void queItemDetail(){
+		this.writeToClient(JsonUtil.getJsonStrByConfigFromMap(itemService.queItemDetail(itemBean)));
+	}
+	public void uploadDetailImage(){
+		this.writeToClient(JsonUtil.getJsonStrByConfigFromMap(itemService.uploadDetailImage(itemBean)));
+	}
 	
 	public void addItemStock(){
 		this.writeToClient(JsonUtil.getJsonStrByConfigFromMap(itemService.addItemStock(itemBean)));
@@ -80,6 +98,12 @@ public class ItemAction extends BaseAction implements ModelDriven  {
 	}
 	public void updItemStock(){
 		this.writeToClient(JsonUtil.getJsonStrByConfigFromMap(itemService.updItemStock(itemBean)));
+	}
+	public void queItemStock(){
+		this.writeToClient(JsonUtil.getJsonStrByConfigFromMap(itemService.queItemStock(itemBean)));
+	}
+	public void getItemStock(){
+		this.writeToClient(JsonUtil.getJsonStrByConfigFromMap(itemService.getItemStock(itemBean)));
 	}
 	
 	public void addItemPrice(){
@@ -91,28 +115,39 @@ public class ItemAction extends BaseAction implements ModelDriven  {
 	public void updItemPrice(){
 		this.writeToClient(JsonUtil.getJsonStrByConfigFromMap(itemService.updItemPrice(itemBean)));
 	}
-	
+	public void queItemPrice(){
+		this.writeToClient(JsonUtil.getJsonStrByConfigFromMap(itemService.queItemPrice(itemBean)));
+	}
+	public void getItemPrice(){
+		this.writeToClient(JsonUtil.getJsonStrByConfigFromMap(itemService.getItemPrice(itemBean)));
+	}
+
+	public void addImage(){
+		this.writeToClient(JsonUtil.getJsonStrByConfigFromMap(itemService.addImage(itemBean)));
+	}
+	public void delImage(){
+		this.writeToClient(JsonUtil.getJsonStrByConfigFromMap(itemService.delImage(itemBean)));
+	}
+	public void getImage(){
+		this.writeToClient(JsonUtil.getJsonStrByConfigFromMap(itemService.getImage(itemBean)));
+	}
+	public void setDefault(){
+		this.writeToClient(JsonUtil.getJsonStrByConfigFromMap(itemService.setDefault(itemBean)));
+	}
+	public void delFormalImage(){
+		this.writeToClient(JsonUtil.getJsonStrByConfigFromMap(itemService.delFormalImage(itemBean)));
+	}
 	public void addItemGallery(){
 		this.writeToClient(JsonUtil.getJsonStrByConfigFromMap(itemService.addItemGallery(itemBean)));
 	}
 	public void delItemGallery(){
 		this.writeToClient(JsonUtil.getJsonStrByConfigFromMap(itemService.delItemGallery(itemBean)));
 	}
-	
-	public void getItem(){
-		this.writeToClient(JsonUtil.getJsonStrByConfigFromMap(itemService.getItem(itemBean)));
-	}
-	public void getItemList(){
-		this.writeToClient(JsonUtil.getJsonStrByConfigFromMap(itemService.getItemList(itemBean)));
-	}
-	public void getItemStock(){
-		this.writeToClient(JsonUtil.getJsonStrByConfigFromMap(itemService.getItemStock(itemBean)));
-	}
-	public void getItemPrice(){
-		this.writeToClient(JsonUtil.getJsonStrByConfigFromMap(itemService.getItemPrice(itemBean)));
-	}
 	public void getSmallItemGallery(){
 		this.writeToClient(JsonUtil.getJsonStrByConfigFromMap(itemService.getSmallItemGallery(itemBean)));
+	}
+	public void getInitSmallItemGallery(){
+		this.writeToClient(JsonUtil.getJsonStrByConfigFromMap(itemService.getInitSmallItemGallery(itemBean)));
 	}
 
 }
