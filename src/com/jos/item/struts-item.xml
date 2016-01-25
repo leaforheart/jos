@@ -16,6 +16,8 @@
 		</action>
 		<action name="getItem" class="com.jos.item.action.ItemAction" method="getItem">
 		</action>
+		<action name="getOnlineItemList" class="com.jos.item.action.ItemAction" method="getOnlineItemList">
+		</action>
 		<action name="getItemList" class="com.jos.item.action.ItemAction" method="getItemList">
 		</action>
 		

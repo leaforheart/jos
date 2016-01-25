@@ -11,6 +11,7 @@ public interface ItemService extends IBaseService {
 	HashMap<String,Object> itemOnline(ItemBean itemBean);
 	HashMap<String,Object> itemOffline(ItemBean itemBean);
 	HashMap<String,Object> getItem(ItemBean itemBean);
+	HashMap<String, Object> getOnlineItemList(ItemBean itemBean);
 	HashMap<String,Object> getItemList(ItemBean itemBean);
 	
 	HashMap<String,Object> addItemProperties(ItemBean itemBean);
@@ -47,4 +48,5 @@ public interface ItemService extends IBaseService {
 	HashMap<String,Object> getInitSmallItemGallery(ItemBean itemBean);
 	
 	void timeInit();
+	
 }
