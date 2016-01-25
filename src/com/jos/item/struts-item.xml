@@ -14,43 +14,72 @@
 		</action>
 		<action name="itemOffline" class="com.jos.item.action.ItemAction" method="itemOffline">
 		</action>
+		<action name="getItem" class="com.jos.item.action.ItemAction" method="getItem">
+		</action>
+		<action name="getOnlineItemList" class="com.jos.item.action.ItemAction" method="getOnlineItemList">
+		</action>
+		<action name="getItemList" class="com.jos.item.action.ItemAction" method="getItemList">
+		</action>
+		
 		<action name="addItemProperties" class="com.jos.item.action.ItemAction" method="addItemProperties">
 		</action>
 		<action name="delItemProperties" class="com.jos.item.action.ItemAction" method="delItemProperties">
 		</action>
+		<action name="queItemProperties" class="com.jos.item.action.ItemAction" method="queItemProperties">
+		</action>
+		
 		<action name="addItemDetail" class="com.jos.item.action.ItemAction" method="addItemDetail">
 		</action>
 		<action name="updItemDetail" class="com.jos.item.action.ItemAction" method="updItemDetail">
 		</action>
 		<action name="delItemDetail" class="com.jos.item.action.ItemAction" method="delItemDetail">
 		</action>
+		<action name="getItemDetail" class="com.jos.item.action.ItemAction" method="getItemDetail">
+		</action>
+		<action name="queItemDetail" class="com.jos.item.action.ItemAction" method="queItemDetail">
+		</action>
+		<action name="uploadDetailImage" class="com.jos.item.action.ItemAction" method="uploadDetailImage">
+		</action>
+		
 		<action name="addItemStock" class="com.jos.item.action.ItemAction" method="addItemStock">
 		</action>
 		<action name="delItemStock" class="com.jos.item.action.ItemAction" method="delItemStock">
 		</action>
 		<action name="updItemStock" class="com.jos.item.action.ItemAction" method="updItemStock">
 		</action>
+		<action name="queItemStock" class="com.jos.item.action.ItemAction" method="queItemStock">
+		</action>
+		<action name="getItemStock" class="com.jos.item.action.ItemAction" method="getItemStock">
+		</action>
+		
 		<action name="addItemPrice" class="com.jos.item.action.ItemAction" method="addItemPrice">
 		</action>
 		<action name="delItemPrice" class="com.jos.item.action.ItemAction" method="delItemPrice">
 		</action>
 		<action name="updItemPrice" class="com.jos.item.action.ItemAction" method="updItemPrice">
 		</action>
+		<action name="queItemPrice" class="com.jos.item.action.ItemAction" method="queItemPrice">
+		</action>
+		<action name="getItemPrice" class="com.jos.item.action.ItemAction" method="getItemPrice">
+		</action>
+		
+		<action name="addImage" class="com.jos.item.action.ItemAction" method="addImage">
+		</action>
+		<action name="delImage" class="com.jos.item.action.ItemAction" method="delImage">
+		</action>
+		<action name="getImage" class="com.jos.item.action.ItemAction" method="getImage">
+		</action>
+		<action name="setDefault" class="com.jos.item.action.ItemAction" method="setDefault">
+		</action>
+		<action name="delFormalImage" class="com.jos.item.action.ItemAction" method="delFormalImage">
+		</action>
 		<action name="addItemGallery" class="com.jos.item.action.ItemAction" method="addItemGallery">
 		</action>
 		<action name="delItemGallery" class="com.jos.item.action.ItemAction" method="delItemGallery">
 		</action>
-		<action name="updItemGallery" class="com.jos.item.action.ItemAction" method="updItemGallery">
+		<action name="getSmallItemGallery" class="com.jos.item.action.ItemAction" method="getSmallItemGallery">
 		</action>
-		<action name="getItem" class="com.jos.item.action.ItemAction" method="getItem">
-		</action>
-		<action name="getItemList" class="com.jos.item.action.ItemAction" method="getItemList">
-		</action>
-		<action name="getItemStock" class="com.jos.item.action.ItemAction" method="getItemStock">
-		</action>
-		<action name="getItemPrice" class="com.jos.item.action.ItemAction" method="getItemPrice">
-		</action>
-		<action name="getItemGallery" class="com.jos.item.action.ItemAction" method="getItemGallery">
+		<action name="getInitSmallItemGallery" class="com.jos.item.action.ItemAction" method="getInitSmallItemGallery">
 		</action>
 
 	</package>

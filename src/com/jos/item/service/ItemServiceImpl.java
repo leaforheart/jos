@@ -50,7 +50,7 @@ public class ItemServiceImpl extends AbstractBaseService implements ItemService 
 			Item item = itemBean.getItem();
 			item.setCreateTime(new Date());
 			item.setLastUpdateTime(new Date());
-			item.setServiceDes(Constants.ITEM_ONLINE);
+			item.setStatus(Constants.ITEM_ONLINE);
 			itemDao.save(item);
 			map.put(Constants.RETURN_CODE, Constants.SUCCESS_CODE);
 		} catch (Exception e) {
@@ -149,6 +149,39 @@ public class ItemServiceImpl extends AbstractBaseService implements ItemService 
 	}
 	
 	@Override
+	public HashMap<String, Object> getOnlineItemList(ItemBean itemBean) {
+		HashMap<String,Object> map = new HashMap<String,Object>();
+		try {
+			List<String> parameter = new ArrayList<String>();
+			parameter.add(Constants.ITEM_ONLINE);
+			List<Item> itemList = itemDao.findByHql("from Item where status=?", parameter);
+			for(Item i:itemList) {
+				String itemId = i.getId();
+				List<Object> parameters =new ArrayList<Object>();
+				parameters.add(itemId);
+				parameters.add(1);
+				List<ItemGallery> list = itemDao.findByHql("from ItemGallery where itemId=? and isDefault=?", parameters);
+				if(list.size()==0) {
+					map.put(Constants.RETURN_CODE, "-1");//该商品信息不完整，缺少图片信息
+					return map;
+				}
+				String imageId = list.get(0).getImageId();
+				Image image = itemDao.findById(imageId,Image.class);
+				i.setDefaultImageUrl(image.getUrl());
+			}
+			map.put(Constants.RETURN_CODE, Constants.SUCCESS_CODE);
+			List<Object> list = new ArrayList<Object>();
+			list.addAll(itemList);
+			map.put(Constants.RETURN_DATA, JsonUtil.getJsonStrFromList(list));
+		} catch (Exception e) {
+			e.printStackTrace();
+			map.clear();
+			map.put(Constants.RETURN_CODE, Constants.SEVER_ERROR);
+		}
+		return map;
+	}
+	
+	@Override
 	public HashMap<String, Object> getItemList(ItemBean itemBean) {
 		HashMap<String,Object> map = new HashMap<String,Object>();
 		try {
@@ -159,6 +192,10 @@ public class ItemServiceImpl extends AbstractBaseService implements ItemService 
 				parameters.add(itemId);
 				parameters.add(1);
 				List<ItemGallery> list = itemDao.findByHql("from ItemGallery where itemId=? and isDefault=?", parameters);
+				if(list.size()==0) {
+					map.put(Constants.RETURN_CODE, "-1");//该商品信息不完整，缺少图片信息
+					return map;
+				}
 				String imageId = list.get(0).getImageId();
 				Image image = itemDao.findById(imageId,Image.class);
 				i.setDefaultImageUrl(image.getUrl());

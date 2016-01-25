@@ -15,4 +15,6 @@ public interface OrderService extends IBaseService {
 	HashMap<String,Object> getOrderDetail(OrderBean orderBean);
 	HashMap<String,Object> getOrderListForUser(OrderBean orderBean);
 	HashMap<String,Object> getOrderList(OrderBean orderBean);
+	HashMap<String, Object> getExpressList();
+	HashMap<String, Object> getPayList();
 }
