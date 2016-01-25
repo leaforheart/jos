@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>字典列表</title>
+    <link rel="stylesheet" href="../../css/admin/style.css"/>
+</head>
+<body class="dictionaryList-page">
+    <div id="tableList">
+        <table>
+            <thead>
+                <td>类型编码</td>
+                <td>类型名称</td>
+                <td>值编码</td>
+                <td>值名称</td>
+            </thead>
+            <tr>
+            </tr>
+        </table>
+    </div>
+</body>
+<script type="text/javascript" src="../../js/lib/jquery1.7.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $.ajaxSetup({
+            type:"post",
+            dataType:"json"
+        });
+        function getDictionaryList(){
+            var param = {};
+            $.ajax({
+                url:"/jos/dictionary/queList.action",
+                data:param,
+                success: function (data) {
+                    if(data.rCode == "0"){
+                        console.log(data.data);
+                    }else{
+
+                    }
+                }
+            });
+        }
+        getDictionaryList();
+
+    });
+</script>
+</html>

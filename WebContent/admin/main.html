@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh" style="height: 100%;">
+<head>
+    <meta charset="UTF-8">
+    <title>Ksana后台管理系统</title>
+    <link rel="stylesheet" href="../css/admin/style.css"/>
+</head>
+<body class="main-page">
+    <section class="top-main">
+        <img src="../img/temp/111.png" alt="" class="img-logo"/>
+        <a href="##" class="a">退出登录</a>
+    </section>
+    <menu class="left-menu">
+        <li><a href="##" class="a">菜单1号</a></li>
+        <li><a href="##" class="a">菜单2号</a></li>
+        <li><a href="##" class="a">菜单3号</a></li>
+        <li><a href="##" class="a">菜单4号</a></li>
+        <li><a href="##" class="a">菜单5号</a></li>
+        <li><a href="##" class="a">菜单6号</a></li>
+    </menu>
+    <section class="right-body">
+        <div class="sub-menus">
+            <a href="##" class="a cur">子菜单1</a>
+            <a href="##" class="a">子菜单2</a>
+            <a href="##" class="a">子菜单3</a>
+            <a href="##" class="a">子菜单4</a>
+        </div>
+        <div class="frame-box">
+            <iframe src="dictionaryModel/dictionaryList.html" frameborder="0" width="100%"></iframe>
+        </div>
+    </section>
+</body>
+<script type="text/javascript">
+    var frameBoxHeight = document.querySelector(".frame-box").offsetHeight;
+    var iframe = document.querySelector("iframe");
+    iframe.style.height = frameBoxHeight + "px";
+</script>
+</html>

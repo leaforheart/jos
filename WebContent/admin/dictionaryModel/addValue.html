@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>新增值</title>
+    <link rel="stylesheet" href="../../css/admin/style.css"/>
+</head>
+<body class="addValue-page">
+<div>
+    类型编码：<input type="text" name="type-code" class="input" value="abcdef123456"/>
+</div>
+<div>
+    类型名称：<input type="text" name="type-name" class="input" value="类型名称"/>
+</div>
+<div>
+    值编码：<input type="text" name="value-code" class="input" value="abcdef123456"/>
+</div>
+<div>
+    值名称：<input type="text" name="value-name" class="input" value="类型名称"/>
+</div>
+<a href="##" class="btn" id="save">保存</a>
+</body>
+<script type="text/javascript" src="../../js/lib/jquery1.7.js"></script>
+<script type="text/javascript">
+    $(function () {
+        document.querySelector("#save").addEventListener("click", function () {
+            var $typeCode = document.querySelector("[name='type-code']"),
+            $typeName = document.querySelector("[name='type-name']"),
+            $valueCode = document.querySelector("[name='value-code']"),
+            $valueName = document.querySelector("[name='value-name']");
+            var param = {
+                "dictionaryBean.dictionary.typeCode":$typeCode.value,
+                "dictionaryBean.dictionary.typeName":$typeName.value,
+                "dictionaryBean.dictionary.valueCode":$valueCode.value,
+                "dictionaryBean.dictionary.valueName":$valueName.value
+            };
+            $.ajax({
+                url:"/jos/dictionary/addValue.action",
+                type:"post",
+                data:param,
+                dataType:"json",
+                success: function (data) {
+                    if(data.rCode == "0"){/*成功*/
+
+                    }if(data.rCode == "-1"){/*已经存在*/
+
+                    }else{
+
+                    }
+                }
+            });
+        });
+    });
+</script>
+</html>
