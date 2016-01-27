@@ -53,6 +53,7 @@ public class ItemServiceImpl extends AbstractBaseService implements ItemService 
 			item.setStatus(Constants.ITEM_ONLINE);
 			itemDao.save(item);
 			map.put(Constants.RETURN_CODE, Constants.SUCCESS_CODE);
+			map.put(Constants.RETURN_DATA, JsonUtil.getJsonStrFromObj(item));
 		} catch (Exception e) {
 			e.printStackTrace();
 			map.put(Constants.RETURN_CODE, Constants.SEVER_ERROR);
