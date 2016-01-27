@@ -42,6 +42,14 @@ public class DictionaryServiceImpl extends AbstractBaseService implements Dictio
 				map.put(Constants.RETURN_CODE, "-1");//已存在
 				return map;
 			}
+			List<String> parameters1 = new ArrayList<String>();
+			parameters1.add(typeCode);
+			List<Dictionary> list1 = dictionaryDao.findByHql("from Dictionary where typeCode=? and parentId is null", parameters1);
+			if(list1.size()!=1) {
+				map.put(Constants.RETURN_CODE, "-2");//类型不存在
+				return map;
+			}
+			dictionary.setParentId(list1.get(0).getId());
 			dictionary.setCreateTime(new Date());
 			dictionary.setLastUpdateTime(new Date());
 			dictionaryDao.save(dictionary);
