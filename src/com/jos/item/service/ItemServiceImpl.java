@@ -193,13 +193,11 @@ public class ItemServiceImpl extends AbstractBaseService implements ItemService 
 				parameters.add(itemId);
 				parameters.add(1);
 				List<ItemGallery> list = itemDao.findByHql("from ItemGallery where itemId=? and isDefault=?", parameters);
-				if(list.size()==0) {
-					map.put(Constants.RETURN_CODE, "-1");//该商品信息不完整，缺少图片信息
-					return map;
+				if(list.size()!=0) {
+					String imageId = list.get(0).getImageId();
+					Image image = itemDao.findById(imageId,Image.class);
+					i.setDefaultImageUrl(image.getUrl());
 				}
-				String imageId = list.get(0).getImageId();
-				Image image = itemDao.findById(imageId,Image.class);
-				i.setDefaultImageUrl(image.getUrl());
 			}
 			map.put(Constants.RETURN_CODE, Constants.SUCCESS_CODE);
 			List<Object> list = new ArrayList<Object>();
