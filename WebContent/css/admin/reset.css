@@ -1,5 +1,5 @@
 ﻿@charset "utf-8";
-html,body{width:100%;}
+html{width:100%;}
 body,div,ol,ul,li,h1,h2,h3,h4,h5,h6,p,th,td,dl,dd,dt,form,iframe,input,textarea,select,i,pre,form,label,fieldset,blockquote,a,nav,article,aside,footer,header,menu,nav,section,time,audio,video,button{margin: 0; padding: 0;}
 article,aside,footer,header,hgroup,nav,section,audio,canvas,video,button{display: block;}
 h1, h2, h3, h4, h5, h6 {font-weight: normal;font-size: 100%;}   
@@ -34,9 +34,10 @@ a:hover{text-decoration: underline;}
 .input{
     background: #fff;
     padding: 4px 5px;
-    font-size: 12px;
+    font-size: 14px;
     border-radius: 3px;
     border: 1px solid #ccc;
+    width: 250px;
 }
 
 .icon{
