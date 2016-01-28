@@ -273,7 +273,7 @@ public class ItemServiceImpl extends AbstractBaseService implements ItemService 
 		HashMap<String,Object> map = new HashMap<String,Object>();
 		try {
 			File file = itemBean.getFile();
-			String fileName = itemBean.getFileName();
+			String fileName = itemBean.getFileFileName();
 			String itemId = itemBean.getItem().getId();
 			String dest = ServletActionContext.getServletContext().getContextPath()+Constants.IMAGEROOT+File.separator+Constants.DETAIL_IMAGE+File.separator+itemId+File.separator+Constants.IMAGE_TMP+File.separator+fileName;
 			String url = Constants.IMAGE_URL+Constants.DETAIL_IMAGE+File.separator+itemId+File.separator+Constants.IMAGE_TMP+fileName;
@@ -701,7 +701,7 @@ public class ItemServiceImpl extends AbstractBaseService implements ItemService 
 	
 	private ImageTmp saveImageTmp(ItemBean itemBean) throws Exception {
 		File file = itemBean.getFile();
-		String fileName = itemBean.getFileName();
+		String fileName = itemBean.getFileFileName();
 		fileName = FileByteBuffUtil.getUuidName(fileName);
 		ItemGalleryTmp igt = itemBean.getItemGalleryTmp();
 		String itemId = igt.getItemId();

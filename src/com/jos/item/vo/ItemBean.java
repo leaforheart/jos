@@ -27,7 +27,7 @@ public class ItemBean {
 	private ImageTmp imageTmp;
 	private int useAmount;
 	private File file;
-	private String fileName;
+	private String fileFileName;
 	
 	public File getFile() {
 		return file;
@@ -35,11 +35,11 @@ public class ItemBean {
 	public void setFile(File file) {
 		this.file = file;
 	}
-	public String getFileName() {
-		return fileName;
+	public String getFileFileName() {
+		return fileFileName;
 	}
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
+	public void setFileFileName(String fileFileName) {
+		this.fileFileName = fileFileName;
 	}
 	public ItemGalleryTmp getItemGalleryTmp() {
 		return itemGalleryTmp;
