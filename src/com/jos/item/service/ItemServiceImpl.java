@@ -274,7 +274,7 @@ public class ItemServiceImpl extends AbstractBaseService implements ItemService 
 		try {
 			File file = itemBean.getFile();
 			String fileName = itemBean.getFileFileName();
-			String itemId = itemBean.getItem().getId();
+			String itemId = itemBean.getItemDetail().getItemId();
 			String dest = ServletActionContext.getServletContext().getContextPath()+Constants.IMAGEROOT+File.separator+Constants.DETAIL_IMAGE+File.separator+itemId+File.separator+Constants.IMAGE_TMP+File.separator+fileName;
 			String url = Constants.IMAGE_URL+Constants.DETAIL_IMAGE+File.separator+itemId+File.separator+Constants.IMAGE_TMP+fileName;
 			ImageUtil.saveImage(file, dest, null, 0);
