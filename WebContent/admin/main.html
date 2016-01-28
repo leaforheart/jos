@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh" style="height: 100%;">
+<head>
+    <meta charset="UTF-8">
+    <title>Ksana后台管理系统</title>
+    <link rel="stylesheet" href="../css/admin/style.css"/>
+</head>
+<body class="main-page">
+    <section class="top-main">
+        <img src="../img/temp/111.png" alt="" class="img-logo"/>
+        <a href="##" class="a">退出登录</a>
+    </section>
+    <menu class="left-menu">
+    </menu>
+    <section class="right-body">
+        <div class="sub-menus">
+           <!-- <a href="##" class="a" data-src="product/productList.html">商品列表</a>
+            <a href="##" class="a" data-src="product/addProduct.html">新增商品</a>
+            <a href="##" class="a" data-src="dictionaryModel/dictionaryList.html">类型列表</a>
+            <a href="##" class="a" data-src="dictionaryModel/addType.html">新增类型</a>
+            <a href="##" class="a" data-src="dictionaryModel/addValue.html">新增值</a>
+            <a href="##" class="a" data-src="dictionaryModel/editType.html">编辑类型</a>
+            <a href="##" class="a" data-src="dictionaryModel/editValue.html">编辑值</a>-->
+        </div>
+        <div class="frame-box">
+            <iframe src="" frameborder="0" width="100%"></iframe>
+        </div>
+    </section>
+</body>
+<script type="text/javascript" src="../js/lib/jquery1.7.js"></script>
+<script type="text/javascript">
+    /*iframe页面适应*/
+    var frameBoxHeight = document.querySelector(".frame-box").offsetHeight;
+    var iframe = document.querySelector("iframe");
+    iframe.style.height = frameBoxHeight + "px";
+
+
+    var $subMenus = $(".sub-menus"),
+        $leftMenus = $(".left-menu");
+    var menus = [{
+        id:"1",
+        name:"字典管理",
+        subMenus:[{
+            id:"",
+            name:"类型列表",
+            src:"dictionaryModel/dictionaryList.html"
+        },{
+            id:"",
+            name:"新增类型",
+            src:"dictionaryModel/addType.html"
+        },{
+            id:"",
+            name:"新增值",
+            src:"dictionaryModel/addValue.html"
+        }]
+    },{
+        id:"2",
+        name:"商品管理",
+        subMenus:[{
+            id:"",
+            name:"商品列表",
+            src:"productModel/productList.html"
+        },{
+            id:"",
+            name:"新增商品",
+            src:"productModel/addProduct.html"
+        }]
+
+    }];
+    /*左侧菜单*/
+    function leftMenuTemplate(menus){
+        var i= 0,l = menus.length,html='';
+        for(;i<l;i++){
+            html += '<li><a href="##" class="a" data-id="'+menus[i].id+'">'+menus[i].name+'</a></li>';
+        }
+        $leftMenus.html(html);
+    }
+    leftMenuTemplate(menus);
+    /*子菜单*/
+    function subMenus(menus,id){
+        var i= 0,l = menus.length,html='';
+        for(;i<l;i++){
+            if(menus[i].id == id){
+                for(var j=0;j<menus[i].subMenus.length;j++){
+                    html += '<a href="##" class="a" data-src="'+menus[i].subMenus[j].src+'">'+menus[i].subMenus[j].name+'</a>';
+                }
+            }
+        }
+        $subMenus.html(html);
+    }
+    /*左侧菜单点击事件*/
+    $leftMenus.on("click",".a", function () {
+        var id = $(this).attr("data-id");
+        subMenus(menus,id);
+        /*iframe自动加载第一个子菜单*/
+        $subMenus.find(".a:eq(0)").addClass("cur");
+        iframe.src = $subMenus.find(".a.cur").attr("data-src");
+    });
+
+    /*子菜单点击事件*/
+    $subMenus.on("click",".a", function () {
+        iframe.src = $(this).siblings().removeClass("cur").end().addClass("cur").attr("data-src");
+    });
+
+
+</script>
+</html>

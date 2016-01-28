@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>新增类型</title>
+    <link rel="stylesheet" href="../../css/admin/style.css"/>
+</head>
+<body class="addType-page main">
+<div class="input-box">
+    类型编码：<input type="text" name="type-code" class="input" value=""/>
+</div>
+<div class="input-box">
+    类型名称：<input type="text" name="type-name" class="input" value=""/>
+</div>
+<a href="##" class="btn" id="save">保存</a>
+</body>
+<script type="text/javascript" src="../../js/lib/jquery1.7.js"></script>
+<script type="text/javascript">
+    $(function () {
+        document.querySelector("#save").addEventListener("click", function () {
+            var $typeCode = document.querySelector("[name='type-code']"),
+            $typeName = document.querySelector("[name='type-name']");
+            var param = {
+                "dictionaryBean.dictionary.typeCode":$typeCode.value,
+                "dictionaryBean.dictionary.typeName":$typeName.value
+            };
+            $.ajax({
+                url:"/jos/dictionary/addType.action",
+                type:"post",
+                data:param,
+                dataType:"json",
+                success: function (data) {
+                    if(data.rCode == "0"){/*成功*/
+
+                    }if(data.rCode == "-1"){/*已经存在*/
+
+                    }else{
+
+                    }
+                }
+            });
+        });
+    });
+</script>
+</html>

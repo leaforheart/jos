@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>商品列表</title>
+    <link rel="stylesheet" href="../../css/admin/style.css"/>
+</head>
+<body class="productList-page">
+    <div id="tableList">
+
+    </div>
+</body>
+<script type="text/javascript" src="../../js/lib/jquery1.7.js"></script>
+<script type="text/javascript">
+    function tableTemplate(arr){
+        var i= 0,l = arr.length,html = '';
+        html += '<table>';
+        html += '<thead>';
+        html += '<td>类型编码</td>';
+        html += '<td>类型名称</td>';
+        html += '<td>值编码</td>';
+        html += '<td>值名称</td>';
+        html += '<td>操作</td>';
+        for(;i<l;i++){
+            html += '<tr>';
+            html += '<td>'+arr[i].typeCode+'</td>';
+            html += '<td>'+arr[i].typeName+'</td>';
+            html += '<td>'+arr[i].valueCode+'</td>';
+            html += '<td>'+arr[i].valueName+'</td>';
+            html += '<td>';
+            if(arr[i].valueCode == ''){
+                html += '<a href="editType.html?typeCode='+arr[i].typeCode+'&typeName='+arr[i].typeName+'">修改</a>';
+                html += '<a href="##" class="del-oper" data-valueCode="'+arr[i].valueCode+'" data-typeCode="'+arr[i].typeCode+'">删除</a>';
+            }else{
+                html += '<a href="editType.html?typeCode='+arr[i].typeCode+'&valueCode='+arr[i].valueCode+'&valueName='+arr[i].valueName+'">修改</a>';
+                html += '<a href="##" class="del-oper" data-valueCode="'+arr[i].valueCode+'" data-valueName="'+arr[i].valueName+'" data-typeCode="'+arr[i].typeCode+'">删除</a>';
+            }
+            html += '</td></tr>';
+        }
+        html += '</table>';
+        document.querySelector("#tableList").innerHTML = html;
+    }
+    $(function () {
+        $.ajaxSetup({
+            type:"post",
+            dataType:"json"
+        });
+        function getProductList(){
+            var param = {};
+            $.ajax({
+                url:"/jos/item/getItemList.action",
+                data:param,
+                success: function (data) {
+                    if(data.rCode == "0"){
+                        tableTemplate(data.data);
+                    }else{
+
+                    }
+                }
+            });
+        }
+        getProductList();
+        $("#tableList").on("click",".del-oper", function () {
+            var typeCode = $(this).attr("data-typeCode"),
+                valueCode = $(this).attr("data-valueCode");
+            var param,url;
+            if(valueCode == ""){/*删除类型*/
+                url = "/jos/dictionary/delType.action";
+                param = {
+                    "dictionaryBean.dictionary.typeCode":typeCode
+                }
+            }else{/*删除值*/
+                url = "/jos/dictionary/delValue.action";
+                param = {
+                    "dictionaryBean.dictionary.typeCode":typeCode,
+                    "dictionaryBean.dictionary.valueCode":valueCode
+                }
+            }
+
+        });
+    });
+</script>
+</html>

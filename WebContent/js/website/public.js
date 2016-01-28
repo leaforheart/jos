@@ -1,4 +1,3 @@
-var authenticateBean = {};
 /*加载公共页面*/
 $(".include-page").each(function () {
     var _self = $(this);
@@ -11,24 +10,138 @@ $(".include-page").each(function () {
         }
     });
 });
+/*显示登录对话框*/
+function showLoginDialog(){
+    $("#login-dialog").show()
+}
 $(function () {
+    /*显示错误信息*/
+    function showMessage(dom,msg){
+        dom.html(msg);
+    }
+    /*禁用发送验证码按钮*/
+    function disableBtn(dom){
+        $(dom).attr("disabled",true);
+        setTimeout(function () {
+            $(dom).attr("disabled",false);
+        },60000);
+    }
     var $dialog = $(".ef-dialog-box");
-    $dialog.on("click",".mobile-code", function () {
-        authenticateBean.phoneCodeUse  = 1;
+    $dialog.on("click","#register_now" ,function () {
+        $("#login-dialog").hide();
+        $("#register-dialog").show();
+    });
+    /*登录*/
+    $dialog.on("click","#login-dialog .login-btn", function () {
+        var $login = $("#login-dialog"),
+            $account = $login.find("[name='account']"),
+            $password = $login.find("[name='password']"),
+            account = $account.val(),
+            password = $password.val(),
+            $err = $login.find(".err");
+        var param = {
+            "authenticateBean.user.primPrin":account,
+            "authenticateBean.user.credential":password
+        };
+        $.ajax({
+            url:"/jos/authenticate/login.action",
+            type:"post",
+            data:param,
+            dataType:"json",
+            success: function (data) {
+                switch (data.rCode){
+                    case "0":
+                        showMessage($err,"");
+                        $login.hide();
+                        break;
+                    case "-1":showMessage($err,"用户不存在！");break;
+                    case "-2":showMessage($err,"用户存在多个！");break;
+                    case "-3":showMessage($err,"密码错误！");break;
+                    case "-6":showMessage($err,"服务器异常，请联系工作人员！");break;
+                }
+            }
+        });
+
+    });
+    /*注册 发送验证码*/
+    $dialog.on("click","#register-dialog .mobile-code", function () {
+        var $register = $("#register-dialog"),
+            _self = this,
+             $err = $register.find(".err"),
+             mobile = $register.find("[name='mobile']").val();
+        var param = {
+            "authenticateBean.user.primPrin":mobile,
+            "authenticateBean.phoneCodeUse":1
+        };
         $.ajax({
             url:"/jos/authenticate/phoneCode.action",
             type:"post",
-            data:authenticateBean,
+            data:param,
             dataType:"json",
             success: function (data) {
-                console.log(data);
+                switch (data.rCode){
+                    case "0":showMessage($err,"");break;
+                    case "-1":showMessage($err,"您的号码已被注册！");break;
+                    case "-2":showMessage($err,"您的号码不存在！");break;
+                    case "-3":showMessage($err,"验证码获取失败！");break;
+                    case "-6":showMessage($err,"服务器异常，请联系工作人员！");break;
+                }
+                disableBtn(_self);
             }
         });
 });
+    /*提交注册按钮*/
+    $dialog.on("click","#register-dialog .login-btn" ,function () {
+        var $dialog = $("#register-dialog"),
+            $mobile = $dialog.find("[name='mobile']"),
+            $password = $dialog.find("[name='password']"),
+            $confirmPassword = $dialog.find("[name='confirm-password']"),
+            mobile = $mobile.val(),
+            password = $password.val(),
+            confirmPassword = $confirmPassword.val(),
+            mobileCode = $dialog.find("[name='mobile-code']").val(),
+            $checkbox = $dialog.find(".checkbox"),
+            $err = $dialog.find(".err");
+        if(!$checkbox.hasClass("cur")){
+            showMessage($err,"请先同意用户服务协议");
+            return;
+        }
+        var param = {
+            "authenticateBean.user.primPrin":mobile,
+            "authenticateBean.user.credential":password,
+            "authenticateBean.phoneCode":mobileCode
+        };
+        $.ajax({
+            url:"/jos/authenticate/enroll.action",
+            type:"post",
+            data:param,
+            dataType:"json",
+            success: function (data) {
+                switch (data.rCode){
+                    case "0":showMessage($err,"");
+                        $dialog.hide();
+                        $mobile.val("");
+                        $password.val("");
+                        $confirmPassword.val("");
+                        break;
+                    case "-1":showMessage($err,"验证码错误！");break;
+                    case "-2":showMessage($err,"用户已存在！");break;
+                    case "-6":showMessage($err,"服务器异常，请联系工作人员！");break;
+                }
+            }
+        });
+
+    });
+    /*关闭弹窗*/
+    $dialog.on("click",".icon.close",function(){
+        $(this).parent().hide();
+    });
+    /*登录按钮*/
     $(document).on("click","#login-button", function () {
         $(".ef-dialog").hide();
-        $("#login-dialog").show();
+        showLoginDialog();
     });
+    /*注册按钮*/
     $(document).on("click","#register-button", function () {
         $(".ef-dialog").hide();
         $("#register-dialog").show();
@@ -45,6 +158,7 @@ $(function () {
         }
         $box.stop().animate(obj,"fast");
     });
+    /*顶部导航条滚动*/
     var scrollTop = 0;
     $(window).on("scroll", function (e) {
         var scroll = $(window).scrollTop();
@@ -80,7 +194,7 @@ $(function () {
             _self.value = "";
             $(this).removeClass("cur");
         }
-    }).on("blur", function () {
+    }).on("blur",".placeholder",function () {
         var _self = $(this).get(0);
         if($.trim(_self.value) == ""){
             _self.value = _self.defaultValue;

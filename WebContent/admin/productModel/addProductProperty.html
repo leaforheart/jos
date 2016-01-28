@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>新增商品</title>
+    <link rel="stylesheet" href="../../css/admin/style.css"/>
+</head>
+<body class="addProduct-page main">
+<div class="input-box">
+    商品名称：<input type="text" name="product-name" class="input" value="手链"/>
+</div>
+<div class="input-box">
+    商品描述：<input type="text" name="product-desc" class="input" value="杠杠的"/>
+</div>
+<div class="input-box">
+    物流描述：<input type="text" name="express-desc" class="input" value="顺丰物流"/>
+</div>
+<div class="input-box">
+    服务描述：<input type="text" name="service-desc" class="input" value="星级服务"/>
+</div>
+<a href="##" class="btn" id="save">下一步</a>
+</body>
+<script type="text/javascript" src="../../js/lib/jquery1.7.js"></script>
+<script type="text/javascript">
+    $(function () {
+        document.querySelector("#save").addEventListener("click", function () {
+            var $productName = document.querySelector("[name='product-name']"),
+            $productDesc = document.querySelector("[name='product-desc']"),
+            $expressDesc = document.querySelector("[name='express-desc']"),
+            $serviceDesc = document.querySelector("[name='service-desc']");
+            var param = {
+                "itemBean.item.name":$productName.value,
+                "itemBean.item.des":$productDesc.value,
+                "itemBean.item.expressDes":$expressDesc.value,
+                "itemBean.item.serviceDes":$serviceDesc.value
+            };
+            $.ajax({
+                url:"/jos/item/addItem.action",
+                type:"post",
+                data:param,
+                dataType:"json",
+                success: function (data) {
+                    if(data.rCode == "0"){/*成功*/
+                        window.location.href = "addProductDetail.html?id="+data.data.id;
+                    }else{
+
+                    }
+                }
+            });
+        });
+    });
+</script>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>我的收货地址</title>
+    <link rel="stylesheet" href="../css/website/style.css"/>
+</head>
+<body>
+<div class="include-page" data-src="../public/website/head-top.html"></div>
+    <div class="wodeshouhuodizhi-page main">
+        <div class="include-page" data-src="../public/website/head.html"></div>
+        <div class="user-center">
+            <div class="include-page" data-src="../public/website/userNavi.html"></div>
+            <div class="user-body">
+                <div class="include-page" data-src="../public/website/userMenu.html"></div>
+                <div class="right-detail">
+                    <div id="address-list"></div>
+                    <!--<div class="detail-head">收货地址
+                        <span class="span">（可添加10个地址，当前2个地址）</span>
+                    </div>-->
+                    <!--<div class="add-box">
+                        <div class="add-head">
+                            <span class="span">1.收件人信息</span>
+                            当前默认地址
+                            <a href="##" class="btn del">删除</a>
+                        </div>
+                        <p class="p">详细地址：广东省深圳市龙岗区吉祥路一栋307号</p>
+                        <p class="p">电话号码：13694859045</p>
+                        <p class="p">收 件 人：赖大宝</p>
+                    </div>-->
+                    <div id="add-box" class="add-box">
+                        <div class="add-head">
+                            <span class="span" style="padding-left: 25px;">请填写地址信息</span>
+                        </div>
+                        <div class="input-box">
+                            <span class="span">*收&ensp;件&ensp;人：</span>
+                            <input type="text" name="name" class="input" value="王湘赣"/>
+                        </div>
+                        <div class="input-box">
+                            <span class="span">*手机号码：</span>
+                            <input type="text" name="mobile" class="input"  value="13570867314"/>
+                        </div>
+                        <div class="input-box">
+                            <span class="span">*详细地址：</span>
+                            <input type="text" name="address" class="input" style="width: 400px;" value="广东省深圳市福田区梅林街道中康南路8号"/>
+                        </div>
+                        <a href="##" class="btn save-btn">保存收件人信息</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<div class="include-page" data-src="../public/website/foot.html"></div>
+<div class="ef-dialog-box">
+    <div class="include-page" data-src="../public/website/loginDialog.html"></div>
+</div>
+</body>
+<script type="text/javascript" src="../js/lib/jquery1.7.js"></script>
+<script type="text/javascript" src="../js/website/public.js"></script>
+<script type="text/javascript" src="../js/website/receiptAddress.js"></script>
+</html>
