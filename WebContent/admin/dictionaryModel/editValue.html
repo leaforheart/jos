@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>编辑值</title>
+    <link rel="stylesheet" href="../../css/admin/style.css"/>
+</head>
+<body class="editType-page main">
+<div class="input-box">
+    类型编码：<select name="type-code"></select>
+</div>
+<div class="input-box">
+    值编码：<input type="text" name="value-code" class="input" value=""/>
+</div>
+<div class="input-box">
+    值名称：<input type="text" name="value-name" class="input" value=""/>
+</div>
+<a href="##" class="btn" id="save">保存</a>
+</body>
+<script type="text/javascript" src="../../js/lib/jquery1.7.js"></script>
+<script type="text/javascript" src="../../js/admin/public.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $.ajaxSetup({
+            type:"post",
+            dataType:"json"
+        });
+
+        var typeCode = getHashString("typeCode"),
+                valueCode = getHashString("valueCode"),
+                valueName = getHashString("valueName");
+        var $valueCode = document.querySelector("[name='value-code']"),
+                $valueName = document.querySelector("[name='value-name']");
+        $valueCode.value = valueCode;
+        $valueName.value = valueName;
+        function selectHtml(data){
+            var i = 0,l = data.length,html ='';
+            for(;i<l;i++){
+                html += '<option value="'+data[i].typeCode+'">'+data[i].typeName+'</option>'
+            }
+            return html;
+        }
+        var $select = $("[name='type-code']");
+        /*获取类型*/
+        $.ajax({
+            url:"/jos/dictionary/queType.action",
+            success: function (data) {
+                if(data.rCode == "0"){/*成功*/
+                    $select.html(selectHtml(data.data));
+                    $select.val(typeCode);
+                }else{/*服务器异常*/
+
+                }
+            }
+        });
+        /*保存*/
+        document.querySelector("#save").addEventListener("click", function () {
+            var param = {
+                "dictionaryBean.dictionary.typeCode":$select.val(),
+                "dictionaryBean.dictionary.valueCode":$valueCode.value,
+                "dictionaryBean.dictionary.valueName":$valueName.value
+            };
+            $.ajax({
+                url:"/jos/dictionary/updValue.action",
+                data:param,
+                success: function (data) {
+                    if(data.rCode=="0"){/*成功*/
+
+                    }else if(data.rCode=="-1"){/*不存在*/
+
+                    }else{/*服务器异常*/
+
+                    }
+                }
+            });
+        });
+    });
+</script>
+</html>

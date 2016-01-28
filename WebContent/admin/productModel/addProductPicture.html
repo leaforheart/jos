@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>上传商品图片</title>
+    <link rel="stylesheet" href="../../css/admin/style.css"/>
+</head>
+<body class="addProductPicture-page main">
+<div class="input-box">
+    上传图片：<input type="file" id="file" name="itemBean.file"/>
+</div>
+<a href="##" class="btn" id="save">下一步</a>
+</body>
+<script type="text/javascript" src="../../js/lib/jquery1.7.js"></script>
+<script type="text/javascript" src="../../js/lib/ajaxfileupload.js"></script>
+<script type="text/javascript" src="../../js/admin/public.js"></script>
+<script type="text/javascript">
+    $(function () {
+        var id = getHashString("id");
+
+        document.querySelector("#save").addEventListener("click", function () {
+            ajaxFileUpload("file",{"itemBean.itemDetail.itemId":id});
+            /*var $productName = document.querySelector("[name='product-name']"),
+            $productDesc = document.querySelector("[name='product-desc']"),
+            $expressDesc = document.querySelector("[name='express-desc']"),
+            $serviceDesc = document.querySelector("[name='service-desc']");
+            var param = {
+                "itemBean.item.name":$productName.value,
+                "itemBean.item.des":$productDesc.value,
+                "itemBean.item.expressDes":$expressDesc.value,
+                "itemBean.item.serviceDes":$serviceDesc.value
+            };
+            $.ajax({
+                url:"/jos/item/addItem.action",
+                type:"post",
+                data:param,
+                dataType:"json",
+                success: function (data) {
+                    if(data.rCode == "0"){/!*成功*!/
+                        
+                    }else{
+
+                    }
+                }
+            });*/
+        });
+    });
+</script>
+</html>

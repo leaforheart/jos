@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>新增商品详情</title>
+    <link rel="stylesheet" href="../../css/admin/style.css"/>
+</head>
+<body class="addProduct-page main">
+<div class="input-box">
+    商品排序：<input type="number" min="1" step="1" name="product-sequence" class="input" value="1"/>
+</div>
+<div class="input-box">
+    详情类型：<input type="number" min="1" step="1" max="2" name="product-type" class="input" value="1"/>
+    1、文字2、图片
+</div>
+<div class="input-box">
+    详情内容：<input type="text" name="product-content" class="input" value="顺丰物流"/>
+</div>
+<a href="##" class="btn" id="save">下一步</a>
+</body>
+<script type="text/javascript" src="../../js/lib/jquery1.7.js"></script>
+<script type="text/javascript" src="../../js/admin/public.js"></script>
+<script type="text/javascript">
+    $(function () {
+        document.querySelector("#save").addEventListener("click", function () {
+            var id = getHashString("id");
+            var $sequence = document.querySelector("[name='product-sequence']"),
+            $type = document.querySelector("[name='product-type']"),
+            $content = document.querySelector("[name='product-content']");
+            var param = {
+                "itemBean.itemDetail.itemId":id,
+                "itemBean.itemDetail.sequence":$sequence.value,
+                "itemBean.itemDetail.type":$type.value,
+                "itemBean.itemDetail.content":$content.value
+            };
+            $.ajax({
+                url:"/jos/item/addItemDetail.action",
+                type:"post",
+                data:param,
+                dataType:"json",
+                success: function (data) {
+                    if(data.rCode == "0"){/*成功*/
+                        window.location.href = "addProductPicture.html?id="+id;
+                    }else{
+
+                    }
+                }
+            });
+        });
+    });
+</script>
+</html>
